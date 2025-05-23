@@ -60,14 +60,12 @@
   function onScroll() {
     let currentSection = '';
     const scrollY = window.scrollY;
-    // console.log('scrollY--->>', scrollY)
+
     sections.forEach(section => {
-      const sectionTop = section.offsetTop - 130; // 130 Adjust for nav height
-      // console.log(section.id, sectionTop)
+      const sectionTop = section.offsetTop - 130; // Adjust for nav height
       const sectionHeight = section.offsetHeight;
       if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
         currentSection = section.getAttribute('id');
-        // console.log('currentSection--->>>', currentSection)
       }
     });
 
@@ -77,6 +75,16 @@
         link.classList.add('active');
       }
     });
+
+    // Change document title based on currentSection
+    if (currentSection) {
+      // Capitalize first letter and keep the rest lowercase for title
+      const titleSection = currentSection.charAt(0).toUpperCase() + currentSection.slice(1).toLowerCase();
+      document.title = `${titleSection} — EversCode`;
+    } else {
+      // Default title when no section is active
+      document.title = 'EversCode';
+    }
   }
 
   window.addEventListener('scroll', onScroll);
