@@ -127,7 +127,7 @@ const MyWork = () => {
   }, [isCarouselOpen]);
 
   useEffect(() => {
-  const workSectionElement = sectionRef.current; // sectionRef is your ref to the <section id="work">
+  const workSectionElement = sectionRef.current;
 
   if (!workSectionElement) {
     return;
@@ -152,7 +152,7 @@ const MyWork = () => {
     return () => {
       scrollObserver.unobserve(workSectionElement);
     };
-  }, []); // Empty dependency array: runs once on mount.
+  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
