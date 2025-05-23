@@ -121,75 +121,74 @@
   }
 }
 
-/* .embla {
-  overflow: hidden;
-  width: 100%;
-} */
-
-
-/* .carouselWrapper {
-  position: relative;
-} */
-
-
 .carouselWrapper {
   position: relative;
   display: flex;
   flex-direction: column;
-  height: 70vh; /* fixed or relative height for carousel, not 100% */
-  overflow: visible; /* allow overflow to show whole image */
+  height: 70vh;
   box-sizing: border-box;
 }
 
 .embla {
-  flex: 1; /* take remaining vertical space */
+  flex: 1;
   overflow: hidden;
+  min-height: 0;
 }
 
 .emblaContainer {
   display: flex;
+  height: 100%;
 }
 
 .emblaSlide {
   flex: 0 0 100%;
+  height: 100%;
   padding: 1rem;
+  box-sizing: border-box;
   display: flex;
-  justify-content: center; /* center the image horizontally */
-  align-items: center; /* center the image vertically */
-  height: 100%; /* take full height */
+  justify-content: center;
+  align-items: center;
 }
 
 .emblaSlide img {
-  max-width: 90vw;
-  max-height: 60vh;
-  object-fit: contain;
   display: block;
+  object-fit: contain;
+  max-width: 100%;
+  max-height: 100%;
 }
 
 .closeButton {
   position: absolute;
-  /* top: -40px;   move above carousel */
-  top: -10px;
-  right: 0;
-  background-color: rgba(0, 0, 0, 0.6); /* semi-transparent black */
-  color: white;
-  font-size: 2rem;
-  border: none;
-  cursor: pointer;
+  top: 8px;
+  right: 8px;
+  background-color: rgba(55, 65, 81, 0.7);
+  color: var(--color-text);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   width: 40px;
   height: 40px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
   z-index: 10;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease, border-color 0.3s ease;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 }
 
-.closeButton:hover {
-  background-color: rgba(0, 0, 0, 0.8);
+.closeButton svg {
+  display: block;
+  width: 18px;
+  height: 18px;
 }
 
+.closeButton:hover,
+.closeButton:focus-visible {
+  background-color: var(--color-highlight);
+  color: var(--color-bg);
+  border-color: var(--color-highlight);
+  transform: scale(1.05);
+}
 .dotsContainer {
   display: flex;
   justify-content: center;

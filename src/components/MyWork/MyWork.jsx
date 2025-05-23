@@ -119,7 +119,40 @@ const MyWork = () => {
   const [isCarouselOpen, setIsCarouselOpen] = useState(false);
   const [selectedWorkIndex, setSelectedWorkIndex] = useState(0);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false });
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
+  const isCarouselOpenRef = useRef(isCarouselOpen);
+
+  useEffect(() => {
+    isCarouselOpenRef.current = isCarouselOpen;
+  }, [isCarouselOpen]);
+
+  useEffect(() => {
+  const workSectionElement = sectionRef.current; // sectionRef is your ref to the <section id="work">
+
+  if (!workSectionElement) {
+    return;
+  }
+
+  const scrollObserver = new IntersectionObserver(
+    (entries) => {
+      const entry = entries[0];
+      // If Work section is less than 20% visible and carousel is open, close it.
+      if (entry.intersectionRatio < 0.2 && isCarouselOpenRef.current) {
+        setIsCarouselOpen(false);
+      }
+      },
+      {
+        // Trigger callback when visibility crosses these points
+        threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0],
+      }
+    );
+
+    scrollObserver.observe(workSectionElement);
+
+    return () => {
+      scrollObserver.unobserve(workSectionElement);
+    };
+  }, []); // Empty dependency array: runs once on mount.
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -160,6 +193,10 @@ const MyWork = () => {
     setSelectedWorkIndex(index);
     setSelectedImageIndex(0);
     setIsCarouselOpen(true);
+
+    if (sectionRef.current) {
+      sectionRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
   };
 
   const scrollToIndex = (index) => {
@@ -192,7 +229,12 @@ const MyWork = () => {
           </div>
         ) : (
           <div className={styles.carouselWrapper}>
-            <button className={styles.closeButton} onClick={() => setIsCarouselOpen(false)}>×</button>
+            <button className={styles.closeButton} onClick={() => setIsCarouselOpen(false)}>
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
 
             <div className={styles.embla} ref={emblaRef}>
               <div className={styles.emblaContainer}>
