@@ -1,0 +1,149 @@
+<section id="services" class="section services fade-in">
+  <div class="container">
+    <h2 class="section-title text-3xl md:text-4xl font-bold mb-8 text-center">Services</h2>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">💻</div>
+        <h3>Web Development</h3>
+        <p>Building responsive, high-performance websites using modern technologies like React, Vue, and Node.js.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">📱</div>
+        <h3>Mobile Apps</h3>
+        <p>Developing cross-platform mobile applications with React Native and Flutter.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🎨</div>
+        <h3>UI/UX Design</h3>
+        <p>Crafting clean, user-friendly interfaces focused on usability and aesthetics.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">⚙️</div>
+        <h3>API Integration</h3>
+        <p>Connecting your apps with external services via RESTful and GraphQL APIs.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🛠️</div>
+        <h3>Software Maintenance & Support</h3>
+        <p>Providing ongoing maintenance, bug fixes, and feature updates to ensure long-term software reliability.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">☁️</div>
+        <h3>Cloud Deployment</h3>
+        <p>Deploying scalable, reliable applications on AWS, Azure, or Google Cloud platforms.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .services {
+    height: 90vh;
+    scroll-margin-top: 10vh;
+    box-sizing: border-box;
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    padding: 4rem 1.5rem; /* reduced */
+    /* display: flex; */
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .section-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    text-align: center;
+    color: var(--color-highlight);
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    flex-grow: 1;
+  }
+
+  .service-card {
+    background-color: #1f2937;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+  }
+
+  .service-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+  }
+
+  .service-icon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    color: var(--color-highlight);
+  }
+
+  .service-card h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .service-card p {
+    font-size: 0.9rem;
+    line-height: 1.4;
+    color: #d1d5db;
+  }
+
+  /* Fade-in Animation */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (max-width: 600px) {
+    .services {
+      height: auto;
+    }
+
+    .section-title {
+      font-size: 1.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .services {
+      padding: 3rem 1rem;
+    }
+
+    .service-card p {
+      font-size: 0.85rem;
+    }
+  }
+</style>
+
+<script type="module">
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>

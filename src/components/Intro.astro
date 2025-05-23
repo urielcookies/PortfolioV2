@@ -1,0 +1,121 @@
+<section id="intro" class="section intro">
+  <div class="intro-content">
+    <h1>
+      Hi, I'm <span class="highlight">Ever Uriel Garcia</span><br />
+      A Web Developer & Designer
+    </h1>
+    <p>
+      I build sleek, fast, and accessible websites that combine clean code with elegant design.
+      My goal is to deliver digital experiences that are both visually engaging and technically sound.
+    </p>
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sed fermentum erat. Donec 
+      iaculis vel augue in ultricies. Nulla facilisi. Fusce quis nulla metus.
+    </p>
+    <a href="#contact" class="btn">Let's Work Together</a>
+  </div>
+</section>
+
+<style>
+  :root {
+    --color-bg: #0f172a;
+    --color-text: #e0e7ff;
+    --color-highlight: #14b8a6;
+  }
+
+  .section {
+    padding: 6rem 2rem;
+  }
+
+  .intro {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* min-height: 100vh; */
+    margin-top: 10vh;
+    height: 90vh;
+    scroll-margin-top: 10vh;
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    text-align: center;
+    padding: 6rem 1.5rem;
+  }
+
+  .intro-content {
+    max-width: 800px;
+    margin: 0 auto;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .intro-content.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .intro h1 {
+    font-size: 2.75rem;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+  }
+
+  .intro .highlight {
+    color: var(--color-highlight);
+  }
+
+  .intro p {
+    font-size: 1.15rem;
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+    color: var(--color-text);
+  }
+
+  .intro .btn {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background-color: var(--color-highlight);
+    color: #000;
+    border-radius: 0.375rem;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+  }
+
+  .intro .btn:hover {
+    background-color: #3aa98e;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .intro h1 {
+      font-size: 2rem;
+    }
+
+    .intro p {
+      font-size: 1rem;
+    }
+  }
+</style>
+
+<script type="module">
+  document.addEventListener('DOMContentLoaded', () => {
+    const introContent = document.querySelector('.intro-content');
+    if (!introContent) return;
+
+    const observer = new IntersectionObserver(
+      (entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            introContent.classList.add('visible');
+            observer.unobserve(introContent);
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(introContent);
+  });
+</script>

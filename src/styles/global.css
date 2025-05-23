@@ -1,0 +1,33 @@
+@import "tailwindcss";
+
+:root {
+  /* Dark theme variables (default) */
+  --color-bg: #0d1117;
+  --color-nav-bg: #111;
+  --color-border-top: #30363d;
+  --color-text: #fff;
+  --color-highlight: #4fbfa8;
+}
+
+/* Optional: Light theme variables for future toggle */
+[data-theme="light"] {
+  --color-bg: #fff;
+  --color-nav-bg: #f6f8fa;
+  --color-border-top: #e1e4e8;
+  --color-text: #24292e;
+  --color-highlight: #0366d6;
+}
+
+/* Base styles to apply theme variables */
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  padding: 0;
+}
+
+body, nav.nav, .logo, ul.links li a {
+  font-family: 'Raleway', sans-serif;
+}

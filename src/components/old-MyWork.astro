@@ -1,0 +1,358 @@
+<section id="work" class="section work fade-in">
+  <div class="container">
+    <h2 class="section-title">Work</h2>
+    <div class="work-grid">
+      <div class="work-card" data-images='[
+        "/images/mywork/cellularoutfitter/cellularoutfitter_pics1.png",
+        "/images/mywork/cellularoutfitter/cellularoutfitter_pics2.png",
+        "/images/mywork/cellularoutfitter/cellularoutfitter_pics3.png"
+      ]'>
+        <img src="/images/mywork/cellularoutfitter/cellularoutfitter_pics1.png" alt="Cellular Outfitter 1" class="work-image" />
+      </div>
+      <div class="work-card" data-images='["/images/mywork/cellularoutfitter/cellularoutfitter_pics1.png"]'>
+        <img src="/images/mywork/cellularoutfitter/cellularoutfitter_pics1.png" alt="Cellular Outfitter 2" class="work-image" />
+      </div>
+      <div class="work-card" data-images='["/images/mywork/cellularoutfitter/cellularoutfitter_pics1.png"]'>
+        <img src="/images/mywork/cellularoutfitter/cellularoutfitter_pics1.png" alt="Cellular Outfitter 3" class="work-image" />
+      </div>
+      <div class="work-card" data-images='["/images/mywork/cellularoutfitter/cellularoutfitter_pics1.png"]'>
+        <img src="/images/mywork/cellularoutfitter/cellularoutfitter_pics1.png" alt="Cellular Outfitter 4" class="work-image" />
+      </div>
+      <div class="work-card" data-images='["/images/mywork/cellularoutfitter/cellularoutfitter_pics1.png"]'>
+        <img src="/images/mywork/cellularoutfitter/cellularoutfitter_pics1.png" alt="Cellular Outfitter 5" class="work-image" />
+      </div>
+      <div class="work-card" data-images='["/images/mywork/cellularoutfitter/cellularoutfitter_pics1.png"]'>
+        <img src="/images/mywork/cellularoutfitter/cellularoutfitter_pics1.png" alt="Cellular Outfitter 6" class="work-image" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Lightbox Modal -->
+<div id="lightbox" class="lightbox" style="display:none;">
+  <button class="close-btn" aria-label="Close">&times;</button>
+  <div class="lightbox-content">
+    <img class="lightbox-img" src="" alt="Carousel image" />
+    <div class="dots-container" aria-label="Image navigation dots" role="tablist"></div>
+  </div>
+</div>
+
+<style>
+  .work {
+    height: 90vh;
+    scroll-margin-top: 10vh;
+    box-sizing: border-box;
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    padding: 4rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .section-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    text-align: center;
+    color: var(--color-highlight);
+  }
+
+  .work-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    flex-grow: 1;
+    overflow-y: auto;
+  }
+
+  .work-card {
+    background-color: #1f2937;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+  }
+
+  .work-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+  }
+
+  .work-image {
+    width: 100%;
+    height: auto;
+    max-height: 150px;
+    object-fit: cover;
+    border-radius: 0.5rem;
+    transition: transform 0.3s ease;
+  }
+
+  .work-image:hover {
+    transform: scale(1.1);
+  }
+
+  /* Fade-in Animation */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Lightbox Styles */
+  .lightbox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0,0,0,0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    padding: 1rem;
+    box-sizing: border-box;
+  }
+
+  .lightbox-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 90%;
+    max-height: 80vh;
+    width: 100%;
+  }
+
+  .lightbox-img {
+    max-width: 100%;
+    max-height: 70vh;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 20px rgba(255,255,255,0.2);
+    object-fit: contain;
+    user-select: none;
+    touch-action: pan-y;
+  }
+
+  .close-btn {
+    position: fixed;
+    top: 3%;
+    right: 3%;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 3.5rem;
+    cursor: pointer;
+    user-select: none;
+    padding: 0 1rem;
+    z-index: 10000;
+  }
+
+  .close-btn:hover {
+    color: var(--color-highlight);
+  }
+
+  .dots-container {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    user-select: none;
+  }
+
+  .dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #555;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .dot.active {
+    background: var(--color-highlight, #3b82f6);
+  }
+
+  /* Responsive for tablets and mobile */
+  @media (max-width: 900px) {
+    .lightbox-content {
+      max-width: 95%;
+      max-height: 70vh;
+    }
+    .close-btn {
+      font-size: 3rem;
+      top: 2%;
+      right: 2%;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .section-title {
+      font-size: 1.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .work {
+      padding: 3rem 1rem;
+    }
+
+    .close-btn {
+      font-size: 2.5rem;
+      padding: 0 0.25rem;
+    }
+
+    .lightbox-img {
+      max-width: 100%;
+      max-height: 60vh;
+      border-radius: 0.25rem;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+    }
+  }
+</style>
+
+<script>
+  // Fade-in on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // Lightbox with dots and swipe support
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = lightbox.querySelector('.lightbox-img');
+  const closeBtn = lightbox.querySelector('.close-btn');
+  const dotsContainer = lightbox.querySelector('.dots-container');
+
+  let currentImages = [];
+  let currentIndex = 0;
+
+  function createDots(count) {
+    dotsContainer.innerHTML = '';
+    for (let i = 0; i < count; i++) {
+      const dot = document.createElement('button');
+      dot.classList.add('dot');
+      dot.setAttribute('aria-label', `Go to image ${i + 1}`);
+      dot.setAttribute('role', 'tab');
+      dot.type = 'button';
+      if (i === 0) dot.classList.add('active');
+      dot.addEventListener('click', () => {
+        showImage(i);
+      });
+      dotsContainer.appendChild(dot);
+    }
+  }
+
+  function updateDots(index) {
+    dotsContainer.querySelectorAll('.dot').forEach((dot, i) => {
+      dot.classList.toggle('active', i === index);
+      dot.setAttribute('aria-selected', i === index ? 'true' : 'false');
+    });
+  }
+
+  function showImage(index) {
+    currentIndex = index;
+    lightboxImg.src = currentImages[currentIndex];
+    updateDots(currentIndex);
+  }
+
+  function openLightbox(images, index) {
+    currentImages = images;
+    currentIndex = index;
+    lightbox.style.display = 'flex';
+    createDots(images.length);
+    showImage(index);
+    document.body.style.overflow = 'hidden'; // Prevent background scroll
+  }
+
+  function closeLightbox() {
+    lightbox.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+
+  // Swipe support variables
+  let startX = 0;
+  let isSwiping = false;
+
+  lightboxImg.addEventListener('touchstart', (e) => {
+    startX = e.touches[0].clientX;
+    isSwiping = true;
+  });
+
+  lightboxImg.addEventListener('touchmove', (e) => {
+    if (!isSwiping) return;
+    const currentX = e.touches[0].clientX;
+    const diffX = currentX - startX;
+    // Prevent vertical scroll when swiping horizontally
+    if (Math.abs(diffX) > 10) e.preventDefault();
+  }, { passive: false });
+
+  lightboxImg.addEventListener('touchend', (e) => {
+    if (!isSwiping) return;
+    const endX = e.changedTouches[0].clientX;
+    const diffX = endX - startX;
+    if (diffX > 50) {
+      // swipe right, show previous
+      currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
+      showImage(currentIndex);
+    } else if (diffX < -50) {
+      // swipe left, show next
+      currentIndex = (currentIndex + 1) % currentImages.length;
+      showImage(currentIndex);
+    }
+    isSwiping = false;
+  });
+
+  // Attach click events to each work-card's image
+  document.querySelectorAll('.work-card').forEach(card => {
+    const images = JSON.parse(card.getAttribute('data-images'));
+    card.querySelector('.work-image').addEventListener('click', () => {
+      openLightbox(images, 0);
+    });
+  });
+
+  closeBtn.addEventListener('click', closeLightbox);
+
+  // Close lightbox clicking outside image
+  lightbox.addEventListener('click', e => {
+    if (e.target === lightbox) closeLightbox();
+  });
+
+  // Keyboard navigation for lightbox
+  document.addEventListener('keydown', e => {
+    if (lightbox.style.display === 'flex') {
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft') {
+        currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
+        showImage(currentIndex);
+      }
+      if (e.key === 'ArrowRight') {
+        currentIndex = (currentIndex + 1) % currentImages.length;
+        showImage(currentIndex);
+      }
+    }
+  });
+</script>
