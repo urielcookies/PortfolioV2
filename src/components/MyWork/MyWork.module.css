@@ -49,20 +49,22 @@
   background-color: #1f2937;
   border-radius: 0.5rem;
   box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-  overflow: hidden; /* Important for zoom clipping */
+  overflow: hidden;
   transition: box-shadow 0.3s ease;
   cursor: pointer;
-  /* Remove padding and text-align since content is just an image */
   padding: 0;
   text-align: center;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .work-card img {
   width: 100%;
-  height: auto;
-  display: block;
-  transition: transform 0.3s ease;
+  height: 100%;
   object-fit: cover;
+  display: block;
 }
 
 .work-card:hover img {

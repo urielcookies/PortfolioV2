@@ -5,97 +5,109 @@ import styles from "./MyWork.module.css";
 const works = [
   {
     company: {
-      id: 'cellularoutfitter',
-      name: 'Cellular Outfitter (Shopify)',
-      summary: 'This is an e commerce store. I am constantly editing the site and making improvements on it',
-      stack: 'Technologies: Shopify, JavaScript, HTML5, CSS3',
-      website:'https://cellularoutfitter.com/',
-      github: 'https://github.com/Xevnik/fridge2plate',
-      thumbnail: "/images/mywork/cellularoutfitter/cellularoutfitter_pics1.png",
+      id: 'eversvoz',
+      name: 'EversVoz',
+      summary: 'This is a language learning app focused on helping Spanish speakers improve their English pronunciation. I contribute to enhancing its AI-driven feedback system, phonetic transcription features, and user interface to provide a more effective and user-friendly experience.',
+      stack: 'Technologies: React Native, Flask, Supabase, OpenAI, Adapty',
+      website: null,
+      appIOS:'https://apps.apple.com/us/app/eversvoz/id6740795207',
+      appAndroid: null,
+      github: 'https://github.com/urielcookies/EversVoz',
+      thumbnail: "/images/mywork/EversVoz/eversvoz_pics1.png",
       images: [
-        "/images/mywork/cellularoutfitter/cellularoutfitter_pics1.png",
-        "/images/mywork/cellularoutfitter/cellularoutfitter_pics2.png",
-        "/images/mywork/cellularoutfitter/cellularoutfitter_pics3.png",
+        "/images/mywork/EversVoz/eversvoz_pics1.png",
+        "/images/mywork/EversVoz/eversvoz_pics2.png",
+        "/images/mywork/EversVoz/eversvoz_pics3.png",
+      ],
+    },
+  },
+  {
+    company: {
+      id: 'mydocsaid',
+      name: 'MyDocSaid',
+      summary: 'This is a healthcare communication app that helps patients understand and follow their doctor’s instructions. I work on improving usability, organizing medical notes, and enhancing secure messaging between patients and providers.',
+      stack: 'Technologies: React Native, Django REST, MongoDB, Adapty',
+      website:'https://www.recordedhealth.com/',
+      appIOS:'https://play.google.com/store/apps/details?id=com.my123&hl=en-CA',
+      appAndroid:'https://play.google.com/store/apps/details?id=com.recordedhealth&hl=en-US',
+      github: null,
+      thumbnail: "/images/mywork/MDS/mds_pics1.png",
+      images: [
+        "/images/mywork/MDS/mds_pics1.png",
+        "/images/mywork/MDS/mds_pics2.png",
+        "/images/mywork/MDS/mds_pics3.png",
+      ],
+    },
+  },
+  {
+    company: {
+      id: '123dentist',
+      name: '123 Dentist',
+      summary: 'This is a dental services app for 123Dentist, a large Canadian dental network. I work on improving features such as appointment booking, clinic search, and user engagement through gamification.',
+      stack: 'Technologies: Vue, Django, PostgreSQL, React Native for the mobile version',
+      website:'https://app.123dentist.com/',
+      appIOS:'https://apps.apple.com/us/app/my123-app/id6499281979',
+      appAndroid:'https://play.google.com/store/apps/details?id=com.my123&hl=en-CA',
+      github: null,
+      thumbnail: "/images/mywork/PA/job3_pics1.png",
+      images: [
+        "/images/mywork/PA/job3_pics1.png",
+        "/images/mywork/PA/job3_pics2.jpg",
+        "/images/mywork/PA/job3_pics3.png",
+      ],
+    },
+  },
+    {
+    company: {
+      id: 'halolink',
+      name: 'Halo Link',
+      summary: 'This is a collaborative digital pathology platform developed by Indica Labs. I worked on enhancing features like remote slide viewing, AI-powered image analysis integration, and secure data sharing to support research workflows.',
+      stack: 'Technologies: React, C# .NET Core, Apollo GraphQL, MySQL',
+      website:'https://indicalab.com/',
+      appIOS: null,
+      appAndroid: null,
+      github: null,
+      thumbnail: "/images/mywork/IL/job2_pics1.jpg",
+      images: [
+        "/images/mywork/IL/job2_pics1.jpg",
+        "/images/mywork/IL/job2_pics2.jpg",
+        "/images/mywork/IL/job2_pics3.jpg",
       ],
     },
   },
   {
     company: {
       id: 'cellularoutfitter',
-      name: 'Cellular Outfitter (Shopify)',
-      summary: 'This is an e commerce store. I am constantly editing the site and making improvements on it',
-      stack: 'Technologies: Shopify, JavaScript, HTML5, CSS3',
-      website:'https://cellularoutfitter.com/',
-      github: 'https://github.com/Xevnik/fridge2plate',
-      thumbnail: "/images/mywork/cellularoutfitter/cellularoutfitter_pics1.png",
+      name: 'Cellular Outfitter',
+      summary: 'This is an e-commerce platform specializing in affordable mobile accessories like phone cases, chargers, and Bluetooth devices. I focused on enhancing product listings, streamlining the checkout process, and optimizing the user interface to improve customer experience.',
+      stack: 'Technologies: Shopify, Liquid Templates, JavaScript, jQuery, PostgreSQL',
+      website:'https://app.cashet.com/',
+      appIOS: null,
+      appAndroid: null,
+      github: null,
+      thumbnail: "/images/mywork/CO/cellularoutfitter_pics1.png",
       images: [
-        "/images/mywork/cellularoutfitter/cellularoutfitter_pics1.png",
-        "/images/mywork/cellularoutfitter/cellularoutfitter_pics2.png",
-        "/images/mywork/cellularoutfitter/cellularoutfitter_pics3.png",
+        "/images/mywork/CO/cellularoutfitter_pics1.png",
+        "/images/mywork/CO/cellularoutfitter_pics2.png",
+        "/images/mywork/CO/cellularoutfitter_pics3.png",
       ],
     },
   },
   {
     company: {
-      id: 'cellularoutfitter',
-      name: 'Cellular Outfitter (Shopify)',
-      summary: 'This is an e commerce store. I am constantly editing the site and making improvements on it',
-      stack: 'Technologies: Shopify, JavaScript, HTML5, CSS3',
+      id: 'cashet',
+      name: 'Cashet',
+      summary: 'This is a financial management app tailored for film and TV production teams. I worked on enhancing features like real-time transaction tracking, receipt uploads, and card controls to streamline expense management and improve user experience.',
+      stack: 'Technologies: jQuery, PHP, PostgreSQL',
       website:'https://cellularoutfitter.com/',
-      github: 'https://github.com/Xevnik/fridge2plate',
-      thumbnail: "/images/mywork/cellularoutfitter/cellularoutfitter_pics1.png",
+      appIOS: null,
+      appAndroid: null,
+      github: null,
+      thumbnail: "/images/mywork/C/job1_pics1.png",
       images: [
-        "/images/mywork/cellularoutfitter/cellularoutfitter_pics1.png",
-        "/images/mywork/cellularoutfitter/cellularoutfitter_pics2.png",
-        "/images/mywork/cellularoutfitter/cellularoutfitter_pics3.png",
-      ],
-    },
-  },
-  {
-    company: {
-      id: 'cellularoutfitter',
-      name: 'Cellular Outfitter (Shopify)',
-      summary: 'This is an e commerce store. I am constantly editing the site and making improvements on it',
-      stack: 'Technologies: Shopify, JavaScript, HTML5, CSS3',
-      website:'https://cellularoutfitter.com/',
-      github: 'https://github.com/Xevnik/fridge2plate',
-      thumbnail: "/images/mywork/cellularoutfitter/cellularoutfitter_pics1.png",
-      images: [
-        "/images/mywork/cellularoutfitter/cellularoutfitter_pics1.png",
-        "/images/mywork/cellularoutfitter/cellularoutfitter_pics2.png",
-        "/images/mywork/cellularoutfitter/cellularoutfitter_pics3.png",
-      ],
-    },
-  },
-  {
-    company: {
-      id: 'cellularoutfitter',
-      name: 'Cellular Outfitter (Shopify)',
-      summary: 'This is an e commerce store. I am constantly editing the site and making improvements on it',
-      stack: 'Technologies: Shopify, JavaScript, HTML5, CSS3',
-      website:'https://cellularoutfitter.com/',
-      github: 'https://github.com/Xevnik/fridge2plate',
-      thumbnail: "/images/mywork/cellularoutfitter/cellularoutfitter_pics1.png",
-      images: [
-        "/images/mywork/cellularoutfitter/cellularoutfitter_pics1.png",
-        "/images/mywork/cellularoutfitter/cellularoutfitter_pics2.png",
-        "/images/mywork/cellularoutfitter/cellularoutfitter_pics3.png",
-      ],
-    },
-  },
-  {
-    company: {
-      id: 'cellularoutfitter',
-      name: 'Cellular Outfitter (Shopify)',
-      summary: 'This is an e commerce store. I am constantly editing the site and making improvements on it',
-      stack: 'Technologies: Shopify, JavaScript, HTML5, CSS3',
-      website:'https://cellularoutfitter.com/',
-      github: 'https://github.com/Xevnik/fridge2plate',
-      thumbnail: "/images/mywork/cellularoutfitter/cellularoutfitter_pics1.png",
-      images: [
-        "/images/mywork/cellularoutfitter/cellularoutfitter_pics1.png",
-        "/images/mywork/cellularoutfitter/cellularoutfitter_pics2.png",
-        "/images/mywork/cellularoutfitter/cellularoutfitter_pics3.png",
+        "/images/mywork/C/job1_pics1.png",
+        "/images/mywork/C/job1_pics2.png",
+        "/images/mywork/C/job1_pics3.jpg",
       ],
     },
   },
@@ -105,10 +117,10 @@ const MyWork = () => {
   const sectionRef = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
   const [isCarouselOpen, setIsCarouselOpen] = useState(false);
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [selectedWorkIndex, setSelectedWorkIndex] = useState(0);
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false });
 
-  // IntersectionObserver to trigger fade-in
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -129,15 +141,15 @@ const MyWork = () => {
 
   useEffect(() => {
     if (emblaApi && isCarouselOpen) {
-      emblaApi.scrollTo(selectedIndex);
+      emblaApi.scrollTo(0); // Always start at the first image
     }
-  }, [emblaApi, isCarouselOpen, selectedIndex]);
+  }, [emblaApi, isCarouselOpen]);
 
   useEffect(() => {
     if (!emblaApi) return;
 
     const onSelect = () => {
-      setSelectedIndex(emblaApi.selectedScrollSnap());
+      setSelectedImageIndex(emblaApi.selectedScrollSnap());
     };
 
     emblaApi.on("select", onSelect);
@@ -145,7 +157,8 @@ const MyWork = () => {
   }, [emblaApi]);
 
   const handleCardClick = (index) => {
-    setSelectedIndex(index);
+    setSelectedWorkIndex(index);
+    setSelectedImageIndex(0);
     setIsCarouselOpen(true);
   };
 
@@ -154,16 +167,16 @@ const MyWork = () => {
     emblaApi.scrollTo(index);
   };
 
+  const company = works[selectedWorkIndex].company;
+
   return (
     <section
       id="work"
       ref={sectionRef}
-      className={`${styles.work} ${styles["fade-in"]} ${
-        isVisible ? styles.visible : ""
-      }`}
+      className={`${styles.work} ${styles["fade-in"]} ${isVisible ? styles.visible : ""}`}
     >
       <div className={styles.container}>
-        <h2 className={styles['section-title']}>Work</h2>
+        <h2 className={styles["section-title"]}>Work</h2>
 
         {!isCarouselOpen ? (
           <div className={styles["work-grid"]}>
@@ -179,13 +192,11 @@ const MyWork = () => {
           </div>
         ) : (
           <div className={styles.carouselWrapper}>
-            <button className={styles.closeButton} onClick={() => setIsCarouselOpen(false)}>
-              ×
-            </button>
+            <button className={styles.closeButton} onClick={() => setIsCarouselOpen(false)}>×</button>
 
             <div className={styles.embla} ref={emblaRef}>
               <div className={styles.emblaContainer}>
-                {works[selectedIndex].company.images.map((img, i) => (
+                {company.images.map((img, i) => (
                   <div className={styles.emblaSlide} key={i}>
                     <img src={img} alt={`Carousel project ${i + 1}`} />
                   </div>
@@ -193,31 +204,43 @@ const MyWork = () => {
               </div>
             </div>
 
-            {/* Navigation dots */}
             <div className={styles.dotsContainer}>
-              {works[selectedIndex].company.images.map((_, i) => (
+              {company.images.map((_, i) => (
                 <button
                   key={i}
-                  className={`${styles.dot} ${i === selectedIndex ? styles.dotActive : ""}`}
+                  className={`${styles.dot} ${i === selectedImageIndex ? styles.dotActive : ""}`}
                   onClick={() => scrollToIndex(i)}
                   aria-label={`Go to slide ${i + 1}`}
                 />
               ))}
             </div>
 
-            {/* Summary and stack */}
             <div className={styles.summary}>
-              <h3>{works[selectedIndex].company.name}</h3>
-              <p>{works[selectedIndex].company.summary}</p>
-              <p><small>{works[selectedIndex].company.stack}</small></p>
+              <h3>{company.name}</h3>
+              <p>{company.summary}</p>
+              <p><small>{company.stack}</small></p>
 
               <div className={styles.buttonGroup}>
-                <a href={works[selectedIndex].company.website} target="_blank" rel="noopener noreferrer" className={styles.summaryButton}>
-                  Visit Website
-                </a>
-                <a href={works[selectedIndex].company.github} target="_blank" rel="noopener noreferrer" className={styles.summaryButton}>
-                  GitHub
-                </a>
+                {company.website && (
+                  <a href={company.website} target="_blank" rel="noopener noreferrer" className={styles.summaryButton}>
+                    Visit Website
+                  </a>
+                )}
+                {company.github && (
+                  <a href={company.github} target="_blank" rel="noopener noreferrer" className={styles.summaryButton}>
+                    GitHub
+                  </a>
+                )}
+                {company.appIOS && (
+                  <a href={company.appIOS} target="_blank" rel="noopener noreferrer" className={styles.summaryButton}>
+                    iOS App
+                  </a>
+                )}
+                {company.appAndroid && (
+                  <a href={company.appAndroid} target="_blank" rel="noopener noreferrer" className={styles.summaryButton}>
+                    Android App
+                  </a>
+                )}
               </div>
             </div>
           </div>

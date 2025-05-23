@@ -8,7 +8,7 @@
   <ul class="links">
     <li><a href="#intro">INTRO</a></li>
     <li><a href="#about">ABOUT</a></li>
-    <li><a href="#work">MY WORK</a></li>
+    <li><a href="#work">WORK</a></li>
     <li><a href="#services">SERVICES</a></li>
     <li><a href="#contact">CONTACT</a></li>
   </ul>
@@ -76,14 +76,21 @@
       }
     });
 
-    // Change document title based on currentSection
     if (currentSection) {
-      // Capitalize first letter and keep the rest lowercase for title
       const titleSection = currentSection.charAt(0).toUpperCase() + currentSection.slice(1).toLowerCase();
       document.title = `${titleSection} — EversCode`;
+
+      if (currentSection !== 'intro') {
+        const newHash = `#${currentSection}`;
+        if (window.location.hash !== newHash) {
+          history.replaceState(null, document.title, newHash);
+        }
+      } else {
+        history.replaceState(null, document.title, window.location.pathname + window.location.search);
+      }
     } else {
-      // Default title when no section is active
       document.title = 'EversCode';
+      history.replaceState(null, document.title, window.location.pathname + window.location.search);
     }
   }
 
