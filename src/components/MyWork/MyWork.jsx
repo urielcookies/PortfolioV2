@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import useEmblaCarousel from "embla-carousel-react";
+import { SwitchTransition, CSSTransition } from 'react-transition-group';
 import styles from "./MyWork.module.css";
 
 const works = [
@@ -122,6 +123,9 @@ const MyWork = () => {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
   const isCarouselOpenRef = useRef(isCarouselOpen);
 
+  const gridRef = useRef(null);
+  const carouselRef = useRef(null);
+
   useEffect(() => {
     isCarouselOpenRef.current = isCarouselOpen;
   }, [isCarouselOpen]);
@@ -214,79 +218,103 @@ const MyWork = () => {
     >
       <div className={styles.container}>
         <h2 className={styles["section-title"]}>Work</h2>
-
-        {!isCarouselOpen ? (
-          <div className={styles["work-grid"]}>
-            {works.map(({ company }, i) => (
-              <div
-                key={company.id + i}
-                className={styles["work-card"]}
-                onClick={() => handleCardClick(i)}
-              >
-                <img src={company.thumbnail} alt={`Work project ${company.name}`} />
-              </div>
-            ))}
-          </div>
-        ) : (
-          <div className={styles.carouselWrapper}>
-            <button className={styles.closeButton} onClick={() => setIsCarouselOpen(false)}>
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="18" y1="6" x2="6" y2="18"></line>
-                <line x1="6" y1="6" x2="18" y2="18"></line>
-              </svg>
-            </button>
-
-            <div className={styles.embla} ref={emblaRef}>
-              <div className={styles.emblaContainer}>
-                {company.images.map((img, i) => (
-                  <div className={styles.emblaSlide} key={i}>
-                    <img src={img} alt={`Carousel project ${i + 1}`} />
+        <SwitchTransition mode="out-in">
+          <CSSTransition
+            key={isCarouselOpen ? 'carouselView' : 'gridView'} // This key change triggers the transition
+            nodeRef={isCarouselOpen ? carouselRef : gridRef}
+            timeout={250}
+            addEndListener={(node, done) => {
+              if (node && typeof node.addEventListener === 'function') {
+                const eventListener = () => {
+                  node.removeEventListener("transitionend", eventListener);
+                  done();
+                };
+                node.addEventListener("transitionend", eventListener, false);
+              } else {
+                // Fallback if node is not valid, rely on the timeout prop
+                setTimeout(done, 250); // Match your timeout duration
+              }
+            }}
+            classNames={{
+              enter: styles.viewEnter,
+              enterActive: styles.viewEnterActive,
+              exit: styles.viewExit,
+              exitActive: styles.viewExitActive,
+            }}>
+            {!isCarouselOpen ? (
+              <div ref={gridRef} className={styles["work-grid"]}>
+                {works.map(({ company }, i) => (
+                  <div
+                    key={company.id + i}
+                    className={styles["work-card"]}
+                    onClick={() => handleCardClick(i)}
+                  >
+                    <img src={company.thumbnail} alt={`Work project ${company.name}`} />
                   </div>
                 ))}
               </div>
-            </div>
+            ) : (
+              <div ref={carouselRef} className={styles.carouselWrapper}>
+                <button className={styles.closeButton} onClick={() => setIsCarouselOpen(false)}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                  </svg>
+                </button>
 
-            <div className={styles.dotsContainer}>
-              {company.images.map((_, i) => (
-                <button
-                  key={i}
-                  className={`${styles.dot} ${i === selectedImageIndex ? styles.dotActive : ""}`}
-                  onClick={() => scrollToIndex(i)}
-                  aria-label={`Go to slide ${i + 1}`}
-                />
-              ))}
-            </div>
+                <div className={styles.embla} ref={emblaRef}>
+                  <div className={styles.emblaContainer}>
+                    {company.images.map((img, i) => (
+                      <div className={styles.emblaSlide} key={i}>
+                        <img src={img} alt={`Carousel project ${i + 1}`} />
+                      </div>
+                    ))}
+                  </div>
+                </div>
 
-            <div className={styles.summary}>
-              <h3>{company.name}</h3>
-              <p>{company.summary}</p>
-              <p><small>{company.stack}</small></p>
+                <div className={styles.dotsContainer}>
+                  {company.images.map((_, i) => (
+                    <button
+                      key={i}
+                      className={`${styles.dot} ${i === selectedImageIndex ? styles.dotActive : ""}`}
+                      onClick={() => scrollToIndex(i)}
+                      aria-label={`Go to slide ${i + 1}`}
+                    />
+                  ))}
+                </div>
 
-              <div className={styles.buttonGroup}>
-                {company.website && (
-                  <a href={company.website} target="_blank" rel="noopener noreferrer" className={styles.summaryButton}>
-                    Visit Website
-                  </a>
-                )}
-                {company.github && (
-                  <a href={company.github} target="_blank" rel="noopener noreferrer" className={styles.summaryButton}>
-                    GitHub
-                  </a>
-                )}
-                {company.appIOS && (
-                  <a href={company.appIOS} target="_blank" rel="noopener noreferrer" className={styles.summaryButton}>
-                    iOS App
-                  </a>
-                )}
-                {company.appAndroid && (
-                  <a href={company.appAndroid} target="_blank" rel="noopener noreferrer" className={styles.summaryButton}>
-                    Android App
-                  </a>
-                )}
+                <div className={styles.summary}>
+                  <h3>{company.name}</h3>
+                  <p>{company.summary}</p>
+                  <p><small>{company.stack}</small></p>
+
+                  <div className={styles.buttonGroup}>
+                    {company.website && (
+                      <a href={company.website} target="_blank" rel="noopener noreferrer" className={styles.summaryButton}>
+                        Visit Website
+                      </a>
+                    )}
+                    {company.github && (
+                      <a href={company.github} target="_blank" rel="noopener noreferrer" className={styles.summaryButton}>
+                        GitHub
+                      </a>
+                    )}
+                    {company.appIOS && (
+                      <a href={company.appIOS} target="_blank" rel="noopener noreferrer" className={styles.summaryButton}>
+                        iOS App
+                      </a>
+                    )}
+                    {company.appAndroid && (
+                      <a href={company.appAndroid} target="_blank" rel="noopener noreferrer" className={styles.summaryButton}>
+                        Android App
+                      </a>
+                    )}
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-        )}
+            )}
+          </CSSTransition>
+        </SwitchTransition>
       </div>
     </section>
   );
