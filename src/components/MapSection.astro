@@ -1,0 +1,195 @@
+---
+const apiKey = "AIzaSyDhIQ4d9JV5e_JQOqEsBRTzKjdg3sUhpjo";
+
+
+const mapCenter = { lat: 34.02641, lng: -118.40852 };
+const mapZoom = 11; // You can adjust this zoom level
+
+// Dark mode styles for Google Maps
+const mapStyles = [
+  { elementType: "geometry", stylers: [{ color: "#212121" }] },
+  { elementType: "labels.icon", stylers: [{ visibility: "off" }] },
+  { elementType: "labels.text.fill", stylers: [{ color: "#757575" }] },
+  { elementType: "labels.text.stroke", stylers: [{ color: "#212121" }] },
+  { featureType: "administrative", elementType: "geometry", stylers: [{ color: "#757575" }] },
+  { featureType: "administrative.country", elementType: "labels.text.fill", stylers: [{ color: "#9e9e9e" }] },
+  { featureType: "administrative.land_parcel", stylers: [{ visibility: "off" }] },
+  { featureType: "administrative.locality", elementType: "labels.text.fill", stylers: [{ color: "#bdbdbd" }] },
+  { featureType: "poi", elementType: "labels.text.fill", stylers: [{ color: "#757575" }] },
+  { featureType: "poi.park", elementType: "geometry", stylers: [{ color: "#181818" }] },
+  { featureType: "poi.park", elementType: "labels.text.fill", stylers: [{ color: "#616161" }] },
+  { featureType: "poi.park", elementType: "labels.text.stroke", stylers: [{ color: "#1b1b1b" }] },
+  { featureType: "road", elementType: "geometry.fill", stylers: [{ color: "#2c2c2c" }] },
+  { featureType: "road", elementType: "labels.text.fill", stylers: [{ color: "#8a8a8a" }] },
+  { featureType: "road.arterial", elementType: "geometry", stylers: [{ color: "#373737" }] },
+  { featureType: "road.highway", elementType: "geometry", stylers: [{ color: "#3c3c3c" }] },
+  { featureType: "road.highway.controlled_access", elementType: "geometry", stylers: [{ color: "#4e4e4e" }] },
+  { featureType: "road.local", elementType: "labels.text.fill", stylers: [{ color: "#616161" }] },
+  { featureType: "transit", elementType: "labels.text.fill", stylers: [{ color: "#757575" }] },
+  { featureType: "water", elementType: "geometry", stylers: [{ color: "#000000" }] },
+  { featureType: "water", elementType: "labels.text.fill", stylers: [{ color: "#3d3d3d" }] }
+];
+
+// --- FOOTER VARIABLES ---
+const currentYear = new Date().getFullYear();
+const email = "evergarcia621@outlook.com";
+const phone = "+1 (505) 400-1198";
+---
+
+<div> {/* Wrapper for the combined section */}
+  <section id="location-map" class="map-section-wrapper">
+    <div id="gmap" class="map-container">
+      { !apiKey && <div class="map-error">Google Maps API Key is missing.</div> }
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="contact-info">
+        <a href={`mailto:${email}`} class="contact-link">{email}</a>
+        <span class="separator">|</span>
+        <a href={`tel:${phone.replace(/\D/g, '')}`} class="contact-link">{phone}</a>
+      </div>
+      <div class="copyright">
+        &copy; 2017-{currentYear} Ever Uriel Garcia. All rights reserved.
+      </div>
+    </div>
+  </footer>
+</div>
+
+<script define:vars={{ apiKey, mapStyles, mapCenter, mapZoom }}>
+  const mapElement = document.getElementById('gmap');
+  const sectionElementForMap = document.getElementById('location-map');
+
+  function initMap() {
+    if (!mapElement || typeof google === 'undefined' || typeof google.maps === 'undefined') {
+      console.error("Map element or Google Maps API not ready for initMap.");
+      if(mapElement) mapElement.innerHTML = '<p class="map-error-text">Could not initialize Google Maps.</p>';
+      return;
+    }
+    const map = new google.maps.Map(mapElement, {
+      center: mapCenter,
+      zoom: mapZoom,
+      styles: mapStyles,
+      disableDefaultUI: true,
+      zoomControl: true,
+    });
+    new google.maps.Marker({
+      position: mapCenter,
+      map: map,
+    });
+  }
+
+  function loadGoogleMapsScript() {
+    if (window.google && window.google.maps) {
+      initMap();
+      return;
+    }
+    window.initMapGlobalCallback = initMap;
+    const script = document.createElement('script');
+    // Use the apiKey passed via define:vars
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&callback=initMapGlobalCallback&loading=async`;
+    script.async = true;
+    script.defer = true;
+    script.onerror = () => {
+      console.error("Google Maps script failed to load.");
+      if(mapElement) mapElement.innerHTML = '<p class="map-error-text">Google Maps script failed to load. Check API key and network.</p>';
+    };
+    document.head.appendChild(script);
+  }
+
+  if (apiKey && mapElement && sectionElementForMap) {
+    const observer = new IntersectionObserver((entries, obs) => {
+      if (entries.some(entry => entry.isIntersecting)) {
+        loadGoogleMapsScript();
+        obs.disconnect();
+      }
+    }, { threshold: 0.1 });
+    observer.observe(sectionElementForMap);
+  } else if (!apiKey && mapElement) {
+      console.warn("Google Maps API key is missing. Map will not load.");
+      mapElement.innerHTML = '<p class="map-error-text">Map requires an API Key. Please check configuration.</p>';
+  } else if (!mapElement && apiKey) {
+      console.error("Map container element #gmap not found for API key:", apiKey ? '******' : 'undefined');
+  } else if (!sectionElementForMap && apiKey) {
+      console.error("Map section element #location-map not found for Intersection Observer.");
+  }
+</script>
+
+<style>
+  .map-section-wrapper {
+    background-color: var(--color-bg-darker, #111);
+    padding: 0;
+  }
+  .map-container {
+    height: 50vh; /* Adjust as needed */
+    width: 100%;
+    background-color: #000; /* Placeholder while map loads */
+  }
+  .map-error, .map-error-text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    color: var(--color-text-error, #ff6b6b);
+    font-size: 1.1rem;
+    text-align: center;
+    padding: 1rem;
+    box-sizing: border-box;
+  }
+
+  /* Styles for Footer Section */
+  .site-footer {
+    background-color: var(--color-bg-footer, #111111);
+    color: var(--color-text-secondary, #a0aec0);
+    padding: 2rem 1.5rem;
+    text-align: center;
+  }
+  .footer-container {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+  .contact-info {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .contact-link {
+    color: var(--color-text-secondary, #a0aec0);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  .contact-link:hover {
+    color: var(--color-highlight, #38b2ac);
+  }
+  .separator {
+    margin: 0 0.25rem;
+  }
+  .copyright {
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .footer-container {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      text-align: left;
+      gap: 1.5rem;
+    }
+    .contact-info {
+      justify-content: flex-start;
+    }
+    .copyright {
+      margin-top: 0;
+      text-align: right;
+    }
+  }
+</style>
