@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <title>urielcookies</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Roboto+Mono:wght@400;700&display=swap');
+
+        :root {
+            --color-bg: #121212; /* Very dark background */
+            /* --color-bg-secondary: #1e1e1e; /* No longer used */
+            /* --color-surface: #2a2a2a; /* No longer used */
+            --color-primary: #bb86fc; /* A vibrant purple accent */
+            /* --color-primary-variant: #3700b3; /* No longer used */
+            /* --color-secondary: #03dac6; /* No longer used */
+            --color-text: #e0e0e0; /* Light gray for text */
+            /* --color-text-secondary: #b0b0b0; /* No longer used directly, but hero-logo can use --color-text */
+            --font-primary: 'Poppins', sans-serif;
+            --font-code: 'Roboto Mono', monospace;
+            /* --color-primary-rgb: 187, 134, 252; /* No longer used as CTA button is removed */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-primary);
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.7;
+            overflow-x: hidden; /* Prevent horizontal scroll */
+            display: flex; /* For centering hero content */
+            align-items: center; /* For centering hero content */
+            justify-content: center; /* For centering hero content */
+            min-height: 100vh; /* Ensure body takes full viewport height */
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            /* min-height: 100vh; /* Body now handles this for centering */
+            display: flex; /* Already on body, but can keep for direct children if any were added back */
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem; /* Padding around the content */
+            /* Background can be simplified if texture isn't desired for just text */
+            background: linear-gradient(rgba(18, 18, 18, 0.85), rgba(18, 18, 18, 0.95));
+            /* Optional: add texture back if you like it
+            background: linear-gradient(rgba(18, 18, 18, 0.85), rgba(18, 18, 18, 0.95)),
+                        url('https://www.transparenttextures.com/patterns/carbon-fibre-v2.png');
+            background-size: auto, 300px;
+            */
+            border-radius: 10px; /* Optional: give the hero box some rounded corners */
+        }
+
+        .hero-logo {
+            font-family: var(--font-code);
+            font-size: clamp(2.5rem, 10vw, 6rem); /* Adjusted clamp for potentially larger text */
+            color: var(--color-primary);
+            /* margin-bottom: 0.5rem; /* Not needed if it's the only element */
+            letter-spacing: 1px;
+            font-weight: 700;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s 0.2s forwards;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+    </style>
+</head>
+  <body>
+
+    <header class="hero">
+        <div class="container">
+            <h1 class="hero-logo" id="logoText">urielcookies</h1>
+        </div>
+    </header>
+  </body>
+</html>
