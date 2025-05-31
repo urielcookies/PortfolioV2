@@ -1,0 +1,182 @@
+---
+// src/components/urielcookies/Navigation.astro
+export interface Props {
+  menuTitle?: string;
+  navLinks?: { href: string; text: string }[];
+  siteTitle?: string;
+}
+
+const {
+  siteTitle = "urielcookies",
+  navLinks = [],
+  menuTitle = 'Menu',
+} = Astro.props;
+
+const currentPath = Astro.url.pathname;
+---
+
+<nav class="bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 shadow-md sticky top-0 z-50 transition-colors duration-300 ease-in-out">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16">
+
+      <div class="flex-none"> {/* Ensures this section doesn't grow or shrink */}
+        <button
+          type="button"
+          id="theme-toggle-button"
+          class="p-2 rounded-full text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-900 focus:ring-indigo-500 transition-all duration-300"
+          aria-label="Toggle theme"
+        >
+          {/* Sun Icon */}
+          <svg id="theme-icon-sun" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+          </svg>
+          {/* Moon Icon */}
+          <svg id="theme-icon-moon" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+          </svg>
+        </button>
+      </div>
+
+      {/* Center Section: Site Title */}
+      <div class="flex-1 text-center px-2"> {/* flex-1 allows it to take available space, text-center centers the content */}
+        <a href="/" class="text-xl font-semibold text-gray-800 dark:text-white hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors duration-300 truncate">
+          {siteTitle} {/* Your new title */}
+        </a>
+      </div>
+
+      {/* Right Section: Hamburger Menu Button */}
+      <div class="flex-none"> {/* Ensures this section doesn't grow or shrink */}
+        <button
+          type="button"
+          class="p-2 rounded-md text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-900 focus:ring-indigo-500 md:p-2 bg-gray-50 dark:bg-gray-800 transition-all duration-300"
+          aria-controls="mobile-menu"
+          aria-expanded="false"
+          id="mobile-menu-button"
+        >
+          <span class="sr-only">Open main menu</span>
+          <svg id="menu-icon-open" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+          <svg id="menu-icon-close" class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  {/* Slide-in Menu from Right (width classes w-full sm:w-1/2 as fixed previously) */}
+  <div
+    id="mobile-menu"
+    class="fixed top-0 right-0 h-screen w-full sm:w-1/2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 p-6 shadow-xl z-40 transform translate-x-full transition-transform duration-300 ease-in-out"
+  >
+    <div class="flex justify-between items-center mb-8">
+      <h2 class="text-xl font-semibold text-gray-900 dark:text-white">{menuTitle}</h2>
+      <button id="close-menu-button" class="p-1 rounded-full text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-150">
+        <span class="sr-only">Close menu</span>
+        <svg class="h-7 w-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+    <div class="space-y-3">
+      {navLinks.map((link) => (
+        <a
+          href={link.href}
+          class:list={[
+            "block px-4 py-3 rounded-lg text-base font-medium transition-colors duration-150 ease-in-out",
+            currentPath === link.href || (link.href !== "/" && currentPath.startsWith(link.href))
+              ? "bg-gray-100 text-indigo-700 dark:bg-gray-700 dark:text-white"
+              : "hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white",
+          ]}
+          aria-current={currentPath === link.href ? "page" : undefined}
+        >
+          {link.text}
+        </a>
+      ))}
+    </div>
+  </div>
+
+  {/* Overlay for when menu is open */}
+  <div
+    id="overlay"
+    class="fixed inset-0 bg-black bg-opacity-50 dark:bg-opacity-75 z-30 opacity-0 pointer-events-none transition-opacity duration-300 ease-in-out"
+  ></div>
+</nav>
+
+<script>
+  import { currentTheme, toggleTheme, clientThemeInit, type Theme } from '../../stores/urielcookies/themeStore';
+
+  // Theme Toggler Elements
+  const themeToggleButton = document.getElementById('theme-toggle-button');
+  const themeIconSun = document.getElementById('theme-icon-sun');
+  const themeIconMoon = document.getElementById('theme-icon-moon');
+
+  function updateThemeIcons(theme: Theme) {
+    if (theme === 'dark') {
+      themeIconSun?.classList.remove('hidden');
+      themeIconMoon?.classList.add('hidden');
+    } else {
+      themeIconMoon?.classList.remove('hidden');
+      themeIconSun?.classList.add('hidden');
+    }
+  }
+
+  // Initialize client-side theme logic
+  clientThemeInit();
+  updateThemeIcons(currentTheme.get());
+
+  const unsubscribeTheme = currentTheme.subscribe(newTheme => {
+    updateThemeIcons(newTheme);
+  });
+
+  themeToggleButton?.addEventListener('click', () => {
+    toggleTheme();
+  });
+
+  // --- Slide-out Menu Logic ---
+  const menuButton = document.getElementById('mobile-menu-button');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const closeMenuButton = document.getElementById('close-menu-button');
+  const overlay = document.getElementById('overlay');
+  const menuIconOpen = document.getElementById('menu-icon-open');
+  const menuIconClose = document.getElementById('menu-icon-close');
+  const navLinksInMenu = mobileMenu?.querySelectorAll('a');
+
+  function openMenu() {
+    if (!mobileMenu || !overlay || !menuButton || !menuIconOpen || !menuIconClose) return;
+    mobileMenu.classList.remove('translate-x-full');
+    mobileMenu.classList.add('translate-x-0');
+    overlay.classList.remove('opacity-0', 'pointer-events-none');
+    overlay.classList.add('opacity-100', 'pointer-events-auto');
+    menuButton.setAttribute('aria-expanded', 'true');
+    menuIconOpen.classList.remove('block'); menuIconOpen.classList.add('hidden');
+    menuIconClose.classList.remove('hidden'); menuIconClose.classList.add('block');
+  }
+
+  function closeMenu() {
+    if (!mobileMenu || !overlay || !menuButton || !menuIconOpen || !menuIconClose) return;
+    mobileMenu.classList.add('translate-x-full');
+    mobileMenu.classList.remove('translate-x-0');
+    overlay.classList.add('opacity-0', 'pointer-events-none');
+    overlay.classList.remove('opacity-100', 'pointer-events-auto');
+    menuButton.setAttribute('aria-expanded', 'false');
+    menuIconOpen.classList.remove('hidden'); menuIconOpen.classList.add('block');
+    menuIconClose.classList.remove('block'); menuIconClose.classList.add('hidden');
+  }
+
+  menuButton?.addEventListener('click', () => {
+    menuButton.getAttribute('aria-expanded') === 'true' ? closeMenu() : openMenu();
+  });
+  closeMenuButton?.addEventListener('click', closeMenu);
+  overlay?.addEventListener('click', closeMenu);
+  navLinksInMenu?.forEach(link => {
+    link.addEventListener('click', () => {
+      if (mobileMenu?.classList.contains('translate-x-0')) closeMenu();
+    });
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && mobileMenu?.classList.contains('translate-x-0')) closeMenu();
+  });
+</script>
