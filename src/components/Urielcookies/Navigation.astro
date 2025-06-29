@@ -84,6 +84,7 @@ const currentPath = Astro.url.pathname;
       {navLinks.map((link) => (
         <a
           href={link.href}
+          target="_blank"
           class:list={[
             "block px-4 py-3 rounded-lg text-base font-medium transition-colors duration-150 ease-in-out",
             currentPath === link.href || (link.href !== "/" && currentPath.startsWith(link.href))
