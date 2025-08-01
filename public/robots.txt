@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://everscode.com/sitemap.xml
