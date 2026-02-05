@@ -4,7 +4,6 @@ import react from '@astrojs/react';
 
 export default defineConfig({
   site: 'https://everscode.com',
-  base: '/',
   output: 'static',
   integrations: [tailwind(), react()],
 });
