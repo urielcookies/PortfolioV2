@@ -1,0 +1,311 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="UTF-8"><link rel="icon" type="image/x-icon" href="/favicon.ico"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"><meta name="generator" content="Astro v5.10.1"><title>EversCode</title><link rel="stylesheet" href="/_astro/index.Ch26TteO.css">
+<link rel="stylesheet" href="/_astro/index.DBg8s8L6.css"></head> <body>  <nav class="nav" id="navbar" data-astro-cid-vakiuw5d> <a href="/urielcookies" class="logo" id="logoLink" data-astro-cid-vakiuw5d>urielcookies</a> <button class="hamburger" aria-label="Toggle menu" aria-expanded="false" data-astro-cid-vakiuw5d> <span class="bar" data-astro-cid-vakiuw5d></span> <span class="bar" data-astro-cid-vakiuw5d></span> <span class="bar" data-astro-cid-vakiuw5d></span> </button> <ul class="links" data-astro-cid-vakiuw5d> <li data-astro-cid-vakiuw5d><a href="#intro" data-astro-cid-vakiuw5d>INTRO</a></li> <li data-astro-cid-vakiuw5d><a href="#about" data-astro-cid-vakiuw5d>ABOUT</a></li> <li data-astro-cid-vakiuw5d><a href="#work" data-astro-cid-vakiuw5d>WORK</a></li> <li data-astro-cid-vakiuw5d><a href="#services" data-astro-cid-vakiuw5d>SERVICES</a></li> <li data-astro-cid-vakiuw5d><a href="#contact" data-astro-cid-vakiuw5d>CONTACT</a></li> <li data-astro-cid-vakiuw5d><a href="/resume/EversResume2025.pdf" class="resume-nav-button" target="_blank" rel="noopener noreferrer" data-astro-cid-vakiuw5d>RESUME</a></li> </ul> </nav> <script type="module">
+  let hasInitializedNavAndModal = false;
+
+  let logoLink = null;
+  let links = null;
+  let hamburger = null;
+  let navLinksList = null;
+  let sections = null;
+  let redirectModal = null;
+  let modalStayButton = null;
+  let modalProceedButton = null;
+  let targetRedirectUrl = '';
+
+  function setActiveLink(currentHash) {
+    if (!links) return;
+    links.forEach(link => {
+      if (link.id !== 'logoLink') {
+        if (link.getAttribute('href') === currentHash) {
+          link.classList.add('active');
+        } else {
+          link.classList.remove('active');
+        }
+      }
+    });
+  }
+
+  function toggleMenu() {
+    if (navLinksList && hamburger) {
+      const isOpen = navLinksList.classList.toggle('open');
+      hamburger.classList.toggle('open');
+      hamburger.setAttribute('aria-expanded', isOpen.toString());
+    }
+  }
+
+  function closeMenu() {
+    if (navLinksList) navLinksList.classList.remove('open');
+    if (hamburger) {
+      hamburger.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', 'false');
+    }
+  }
+
+  function onScroll() {
+    if (!sections || !links) {
+        const currentHash = window.location.hash;
+        if ((currentHash === '#intro' || (!currentHash && window.scrollY === 0)) && links) {
+             setActiveLink('#intro');
+        } else if (links) {
+            links.forEach(link => link.classList.remove('active'));
+        }
+        document.title = 'EversCode';
+        if (window.location.hash && currentHash !== '#intro') {
+            history.replaceState(null, document.title, window.location.pathname + window.location.search);
+        }
+        return;
+    }
+
+    let currentSectionId = '';
+    const scrollY = window.scrollY;
+    const navElement = document.getElementById('navbar');
+    const navHeight = navElement ? navElement.offsetHeight : 100;
+    const offset = navHeight + 30;
+
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop - offset;
+      const sectionBottom = sectionTop + section.offsetHeight;
+      if (scrollY >= sectionTop && scrollY < sectionBottom) {
+        currentSectionId = section.getAttribute('id');
+      }
+    });
+    
+    if (!currentSectionId && sections.length > 0) {
+        if (scrollY < sections[0].offsetTop - navHeight) {
+            currentSectionId = 'intro'; 
+        } else if (scrollY + window.innerHeight >= document.body.scrollHeight - 50) {
+            currentSectionId = sections[sections.length - 1].getAttribute('id');
+        }
+    }
+
+    if (currentSectionId) {
+      setActiveLink(`#${currentSectionId}`);
+      const titleSection = currentSectionId.charAt(0).toUpperCase() + currentSectionId.slice(1).toLowerCase();
+      document.title = `${titleSection} — EversCode`;
+
+      if (currentSectionId !== 'intro' && window.location.hash !== `#${currentSectionId}`) {
+        history.replaceState(null, document.title, `#${currentSectionId}`);
+      } else if (currentSectionId === 'intro' && window.location.hash) {
+        history.replaceState(null, document.title, window.location.pathname + window.location.search);
+      }
+    } else if (scrollY === 0) { 
+        setActiveLink('#intro'); 
+        document.title = 'EversCode';
+        history.replaceState(null, document.title, window.location.pathname + window.location.search);
+    }
+  }
+
+  function initializeNavAndModal() {
+    if (hasInitializedNavAndModal) {
+      return; 
+    }
+    hasInitializedNavAndModal = true;
+
+    logoLink = document.getElementById('logoLink');
+    links = document.querySelectorAll('ul.links li a');
+    hamburger = document.querySelector('.hamburger');
+    navLinksList = document.querySelector('ul.links');
+    sections = document.querySelectorAll('section[id]');
+
+    redirectModal = document.getElementById('redirectModal');
+    modalStayButton = document.getElementById('modalStayButton');
+    modalProceedButton = document.getElementById('modalProceedButton');
+
+    if (logoLink) {
+      logoLink.addEventListener('click', (event) => {
+        event.preventDefault();
+        targetRedirectUrl = logoLink.href;
+        if (redirectModal) {
+          redirectModal.classList.add('modal-open');
+        } else {
+          if (targetRedirectUrl) window.location.href = targetRedirectUrl;
+        }
+        if (navLinksList && navLinksList.classList.contains('open')) {
+          closeMenu();
+        }
+      });
+    }
+
+    if (modalStayButton) {
+      modalStayButton.addEventListener('click', () => {
+        if (redirectModal) redirectModal.classList.remove('modal-open');
+      });
+    }
+
+    if (modalProceedButton) {
+      modalProceedButton.addEventListener('click', () => {
+        if (redirectModal) redirectModal.classList.remove('modal-open');
+        if (targetRedirectUrl) window.location.href = targetRedirectUrl;
+      });
+    }
+
+    if (redirectModal) {
+      redirectModal.addEventListener('click', (event) => {
+        if (event.target === redirectModal) redirectModal.classList.remove('modal-open');
+      });
+    }
+
+    if (hamburger) {
+      hamburger.addEventListener('click', toggleMenu);
+    }
+
+    if (links) {
+      links.forEach(linkElement => {
+        if (linkElement.id !== 'logoLink') {
+          linkElement.addEventListener('click', () => {
+            if (navLinksList && navLinksList.classList.contains('open')) {
+              closeMenu();
+            }
+          });
+        }
+      });
+    }
+
+    window.addEventListener('scroll', onScroll);
+
+    if (window.location.hash && document.querySelector(window.location.hash)) {
+      setActiveLink(window.location.hash);
+    } else {
+      onScroll();
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeNavAndModal);
+  } else {
+    initializeNavAndModal();
+  }
+</script>  <section id="intro" class="section intro" data-astro-cid-xlhz5zlu> <div class="intro-content" data-astro-cid-xlhz5zlu> <h1 data-astro-cid-xlhz5zlu>
+Hi, I'm <span class="highlight" data-astro-cid-xlhz5zlu>Ever Uriel Garcia</span><br data-astro-cid-xlhz5zlu>
+A FullStack Web Developer
+</h1> <p data-astro-cid-xlhz5zlu>
+I build fullstack applications from the ground up.
+      When I’m not coding at work,
+      I’m working on personal projects, contributing to open source
+      (<a href="http://www.hackforla.org/" id="hack4la" target="_blank" rel="noopener noreferrer" data-astro-cid-xlhz5zlu>Hack for LA</a>),
+      or watching the latest Fireship videos on YouTube—sometimes all at once. I love what I do.
+</p> <a href="#contact" class="btn" data-astro-cid-xlhz5zlu>Let's Work Together</a> </div> </section>  <script type="module">
+  document.addEventListener('DOMContentLoaded', () => {
+    const introContent = document.querySelector('.intro-content');
+    if (!introContent) return;
+
+    const observer = new IntersectionObserver(
+      (entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            introContent.classList.add('visible');
+            observer.unobserve(introContent);
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(introContent);
+  });
+</script> <section id="about" class="py-16 px-6 md:px-12 bg-slate-900 text-white" aria-labelledby="about-title" data-astro-cid-v7kyftyo> <div class="max-w-5xl mx-auto" data-astro-cid-v7kyftyo> <h2 id="about-title" class="text-3xl md:text-4xl font-bold mb-8 text-center text-teal-400" data-astro-cid-v7kyftyo>
+About Me
+</h2> <div class="relative" data-astro-cid-v7kyftyo> <!-- Vertical line --> <div class="absolute left-6 md:left-1/2 top-0 md:transform md:-translate-x-1/2 w-1 bg-teal-500 h-full" data-astro-cid-v7kyftyo></div> <div class="space-y-8 md:space-y-10" data-astro-cid-v7kyftyo> <article tabindex="0" class="relative flex items-start md:items-center opacity-0 translate-y-10 transition duration-700 ease-out timeline-item" data-astro-cid-v7kyftyo> <!-- Mobile layout --> <div class="md:hidden flex items-start" data-astro-cid-v7kyftyo> <div class="flex-shrink-0 w-12 flex justify-center" data-astro-cid-v7kyftyo> <div class="w-5 h-5 bg-teal-500 border-3 border-slate-900 rounded-full relative z-10 timeline-dot" aria-label="Experience marker" role="presentation" data-astro-cid-v7kyftyo></div> </div> <div class="ml-4 flex-1" data-astro-cid-v7kyftyo> <h3 class="text-lg font-semibold" data-astro-cid-v7kyftyo>Full Stack Web Developer @ Potentia Analytics</h3> <span class="text-xs text-gray-400" data-astro-cid-v7kyftyo>April 2021 – Present</span> <p class="mt-1 text-gray-300 text-sm" data-astro-cid-v7kyftyo>
+Developed optimized front-end interfaces using React and Vue, built backend systems with Python/Django, and led mobile development with React Native including subscription integrations and deployment management.
+</p> </div> </div> <!-- Desktop layout --> <div class="hidden md:flex md:items-center md:w-full" data-astro-cid-v7kyftyo> <div class="w-5/12 pr-6 text-right" data-astro-cid-v7kyftyo> <h3 class="text-lg font-semibold" data-astro-cid-v7kyftyo>Full Stack Web Developer @ Potentia Analytics</h3> <span class="text-xs text-gray-400" data-astro-cid-v7kyftyo>April 2021 – Present</span> <p class="mt-1 text-gray-300 text-sm" data-astro-cid-v7kyftyo>
+Developed optimized front-end interfaces using React and Vue, built backend systems with Python/Django, and led mobile development with React Native including subscription integrations and deployment management.
+</p> </div> <div class="w-2/12 flex justify-center" data-astro-cid-v7kyftyo> <div class="w-5 h-5 bg-teal-500 border-3 border-slate-900 rounded-full relative z-10 timeline-dot" aria-label="Experience marker" role="presentation" data-astro-cid-v7kyftyo></div> </div> <div class="w-5/12" data-astro-cid-v7kyftyo></div> </div> </article> <article tabindex="0" class="relative flex items-start md:items-center opacity-0 translate-y-10 transition duration-700 ease-out timeline-item" data-astro-cid-v7kyftyo> <!-- Mobile layout --> <div class="md:hidden flex items-start" data-astro-cid-v7kyftyo> <div class="flex-shrink-0 w-12 flex justify-center" data-astro-cid-v7kyftyo> <div class="w-5 h-5 bg-teal-500 border-3 border-slate-900 rounded-full relative z-10 timeline-dot" aria-label="Experience marker" role="presentation" data-astro-cid-v7kyftyo></div> </div> <div class="ml-4 flex-1" data-astro-cid-v7kyftyo> <h3 class="text-lg font-semibold" data-astro-cid-v7kyftyo>Full Stack Web Developer @ Indica Labs</h3> <span class="text-xs text-gray-400" data-astro-cid-v7kyftyo>August 2018 – April 2021</span> <p class="mt-1 text-gray-300 text-sm" data-astro-cid-v7kyftyo>
+Built complex UI/UX using React, Redux, and Apollo GraphQL. Developed RESTful APIs with Node.js and C# .NET Core, participated in Agile workflows, and collaborated with product managers from concept to launch.
+</p> </div> </div> <!-- Desktop layout --> <div class="hidden md:flex md:items-center md:w-full" data-astro-cid-v7kyftyo> <div class="w-5/12" data-astro-cid-v7kyftyo></div> <div class="w-2/12 flex justify-center" data-astro-cid-v7kyftyo> <div class="w-5 h-5 bg-teal-500 border-3 border-slate-900 rounded-full relative z-10 timeline-dot" aria-label="Experience marker" role="presentation" data-astro-cid-v7kyftyo></div> </div> <div class="w-5/12 pl-6" data-astro-cid-v7kyftyo> <h3 class="text-lg font-semibold" data-astro-cid-v7kyftyo>Full Stack Web Developer @ Indica Labs</h3> <span class="text-xs text-gray-400" data-astro-cid-v7kyftyo>August 2018 – April 2021</span> <p class="mt-1 text-gray-300 text-sm" data-astro-cid-v7kyftyo>
+Built complex UI/UX using React, Redux, and Apollo GraphQL. Developed RESTful APIs with Node.js and C# .NET Core, participated in Agile workflows, and collaborated with product managers from concept to launch.
+</p> </div> </div> </article> <article tabindex="0" class="relative flex items-start md:items-center opacity-0 translate-y-10 transition duration-700 ease-out timeline-item" data-astro-cid-v7kyftyo> <!-- Mobile layout --> <div class="md:hidden flex items-start" data-astro-cid-v7kyftyo> <div class="flex-shrink-0 w-12 flex justify-center" data-astro-cid-v7kyftyo> <div class="w-5 h-5 bg-teal-500 border-3 border-slate-900 rounded-full relative z-10 timeline-dot" aria-label="Experience marker" role="presentation" data-astro-cid-v7kyftyo></div> </div> <div class="ml-4 flex-1" data-astro-cid-v7kyftyo> <h3 class="text-lg font-semibold" data-astro-cid-v7kyftyo>Full Stack Web Developer @ CASHét</h3> <span class="text-xs text-gray-400" data-astro-cid-v7kyftyo>March 2017 – August 2018</span> <p class="mt-1 text-gray-300 text-sm" data-astro-cid-v7kyftyo>
+Converted mockups into functional code using JavaScript/jQuery, maintained PHP backend with PostgreSQL database and AWS S3 storage, and showcased features to cross-functional teams.
+</p> </div> </div> <!-- Desktop layout --> <div class="hidden md:flex md:items-center md:w-full" data-astro-cid-v7kyftyo> <div class="w-5/12 pr-6 text-right" data-astro-cid-v7kyftyo> <h3 class="text-lg font-semibold" data-astro-cid-v7kyftyo>Full Stack Web Developer @ CASHét</h3> <span class="text-xs text-gray-400" data-astro-cid-v7kyftyo>March 2017 – August 2018</span> <p class="mt-1 text-gray-300 text-sm" data-astro-cid-v7kyftyo>
+Converted mockups into functional code using JavaScript/jQuery, maintained PHP backend with PostgreSQL database and AWS S3 storage, and showcased features to cross-functional teams.
+</p> </div> <div class="w-2/12 flex justify-center" data-astro-cid-v7kyftyo> <div class="w-5 h-5 bg-teal-500 border-3 border-slate-900 rounded-full relative z-10 timeline-dot" aria-label="Experience marker" role="presentation" data-astro-cid-v7kyftyo></div> </div> <div class="w-5/12" data-astro-cid-v7kyftyo></div> </div> </article> </div> </div> </div> </section>  <script type="module">
+  // Animate timeline items when they scroll into view
+  const timelineItems = document.querySelectorAll('.timeline-item');
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('opacity-100', 'translate-y-0');
+          entry.target.classList.remove('opacity-0', 'translate-y-10');
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.15 }
+  );
+
+  timelineItems.forEach(item => observer.observe(item));
+</script> <style>astro-island,astro-slot,astro-static-slot{display:contents}</style><script>(()=>{var a=(s,i,o)=>{let r=async()=>{await(await s())()},t=typeof i.value=="object"?i.value:void 0,c={rootMargin:t==null?void 0:t.rootMargin},n=new IntersectionObserver(e=>{for(let l of e)if(l.isIntersecting){n.disconnect(),r();break}},c);for(let e of o.children)n.observe(e)};(self.Astro||(self.Astro={})).visible=a;window.dispatchEvent(new Event("astro:visible"));})();</script><script>(()=>{var A=Object.defineProperty;var g=(i,o,a)=>o in i?A(i,o,{enumerable:!0,configurable:!0,writable:!0,value:a}):i[o]=a;var d=(i,o,a)=>g(i,typeof o!="symbol"?o+"":o,a);{let i={0:t=>m(t),1:t=>a(t),2:t=>new RegExp(t),3:t=>new Date(t),4:t=>new Map(a(t)),5:t=>new Set(a(t)),6:t=>BigInt(t),7:t=>new URL(t),8:t=>new Uint8Array(t),9:t=>new Uint16Array(t),10:t=>new Uint32Array(t),11:t=>1/0*t},o=t=>{let[l,e]=t;return l in i?i[l](e):void 0},a=t=>t.map(o),m=t=>typeof t!="object"||t===null?t:Object.fromEntries(Object.entries(t).map(([l,e])=>[l,o(e)]));class y extends HTMLElement{constructor(){super(...arguments);d(this,"Component");d(this,"hydrator");d(this,"hydrate",async()=>{var b;if(!this.hydrator||!this.isConnected)return;let e=(b=this.parentElement)==null?void 0:b.closest("astro-island[ssr]");if(e){e.addEventListener("astro:hydrate",this.hydrate,{once:!0});return}let c=this.querySelectorAll("astro-slot"),n={},h=this.querySelectorAll("template[data-astro-template]");for(let r of h){let s=r.closest(this.tagName);s!=null&&s.isSameNode(this)&&(n[r.getAttribute("data-astro-template")||"default"]=r.innerHTML,r.remove())}for(let r of c){let s=r.closest(this.tagName);s!=null&&s.isSameNode(this)&&(n[r.getAttribute("name")||"default"]=r.innerHTML)}let p;try{p=this.hasAttribute("props")?m(JSON.parse(this.getAttribute("props"))):{}}catch(r){let s=this.getAttribute("component-url")||"<unknown>",v=this.getAttribute("component-export");throw v&&(s+=` (export ${v})`),console.error(`[hydrate] Error parsing props for component ${s}`,this.getAttribute("props"),r),r}let u;await this.hydrator(this)(this.Component,p,n,{client:this.getAttribute("client")}),this.removeAttribute("ssr"),this.dispatchEvent(new CustomEvent("astro:hydrate"))});d(this,"unmount",()=>{this.isConnected||this.dispatchEvent(new CustomEvent("astro:unmount"))})}disconnectedCallback(){document.removeEventListener("astro:after-swap",this.unmount),document.addEventListener("astro:after-swap",this.unmount,{once:!0})}connectedCallback(){if(!this.hasAttribute("await-children")||document.readyState==="interactive"||document.readyState==="complete")this.childrenConnectedCallback();else{let e=()=>{document.removeEventListener("DOMContentLoaded",e),c.disconnect(),this.childrenConnectedCallback()},c=new MutationObserver(()=>{var n;((n=this.lastChild)==null?void 0:n.nodeType)===Node.COMMENT_NODE&&this.lastChild.nodeValue==="astro:end"&&(this.lastChild.remove(),e())});c.observe(this,{childList:!0}),document.addEventListener("DOMContentLoaded",e)}}async childrenConnectedCallback(){let e=this.getAttribute("before-hydration-url");e&&await import(e),this.start()}async start(){let e=JSON.parse(this.getAttribute("opts")),c=this.getAttribute("client");if(Astro[c]===void 0){window.addEventListener(`astro:${c}`,()=>this.start(),{once:!0});return}try{await Astro[c](async()=>{let n=this.getAttribute("renderer-url"),[h,{default:p}]=await Promise.all([import(this.getAttribute("component-url")),n?import(n):()=>()=>{}]),u=this.getAttribute("component-export")||"default";if(!u.includes("."))this.Component=h[u];else{this.Component=h;for(let f of u.split("."))this.Component=this.Component[f]}return this.hydrator=p,this.hydrate},e,this)}catch(n){console.error(`[astro-island] Error hydrating ${this.getAttribute("component-url")}`,n)}}attributeChangedCallback(){this.hydrate()}}d(y,"observedAttributes",["props"]),customElements.get("astro-island")||customElements.define("astro-island",y)}})();</script><astro-island uid="1Qzg4e" prefix="r1" component-url="/_astro/MyWork.B-ABLLAu.js" component-export="default" renderer-url="/_astro/client.Diu3LL-f.js" props="{&quot;data-astro-cid-j7pv25f6&quot;:[0,true]}" ssr client="visible" opts="{&quot;name&quot;:&quot;MyWork&quot;,&quot;value&quot;:true}" await-children><link rel="preload" as="image" href="/images/mywork/EversVoz/eversvoz_pics1.png"/><link rel="preload" as="image" href="/images/mywork/MDS/mds_pics1.png"/><link rel="preload" as="image" href="/images/mywork/PA/job3_pics1.png"/><link rel="preload" as="image" href="/images/mywork/IL/job2_pics1.jpg"/><link rel="preload" as="image" href="/images/mywork/CO/cellularoutfitter_pics1.png"/><link rel="preload" as="image" href="/images/mywork/C/job1_pics1.png"/><section id="work" class="_work_1oqeu_1 _fade-in_1oqeu_98 "><div class="_container_1oqeu_12"><h2 class="_section-title_1oqeu_21">Work</h2><div class="_work-grid_1oqeu_29"><div class="_work-card_1oqeu_36"><img src="/images/mywork/EversVoz/eversvoz_pics1.png" alt="Work project EversVoz"/></div><div class="_work-card_1oqeu_36"><img src="/images/mywork/MDS/mds_pics1.png" alt="Work project MyDocSaid"/></div><div class="_work-card_1oqeu_36"><img src="/images/mywork/PA/job3_pics1.png" alt="Work project 123 Dentist"/></div><div class="_work-card_1oqeu_36"><img src="/images/mywork/IL/job2_pics1.jpg" alt="Work project Halo Link"/></div><div class="_work-card_1oqeu_36"><img src="/images/mywork/CO/cellularoutfitter_pics1.png" alt="Work project Cellular Outfitter"/></div><div class="_work-card_1oqeu_36"><img src="/images/mywork/C/job1_pics1.png" alt="Work project Cashet"/></div></div></div></section><!--astro:end--></astro-island> <section id="services" class="section services fade-in" data-astro-cid-fqqq73in> <div class="container" data-astro-cid-fqqq73in> <h2 class="section-title text-3xl md:text-4xl font-bold mb-8 text-center" data-astro-cid-fqqq73in>Services</h2> <div class="services-grid" data-astro-cid-fqqq73in> <div class="service-card" data-astro-cid-fqqq73in> <div class="service-icon" data-astro-cid-fqqq73in>💻</div> <h3 data-astro-cid-fqqq73in>Web Development</h3> <p data-astro-cid-fqqq73in>Building responsive, high-performance websites using modern technologies like React, Vue, and Django.</p> </div> <div class="service-card" data-astro-cid-fqqq73in> <div class="service-icon" data-astro-cid-fqqq73in>📱</div> <h3 data-astro-cid-fqqq73in>Mobile Apps</h3> <p data-astro-cid-fqqq73in>Developing cross-platform mobile applications with React Native and Flutter.</p> </div> <div class="service-card" data-astro-cid-fqqq73in> <div class="service-icon" data-astro-cid-fqqq73in>🎨</div> <h3 data-astro-cid-fqqq73in>UI/UX Design</h3> <p data-astro-cid-fqqq73in>Crafting clean, user-friendly interfaces focused on usability and aesthetics.</p> </div> <div class="service-card" data-astro-cid-fqqq73in> <div class="service-icon" data-astro-cid-fqqq73in>⚙️</div> <h3 data-astro-cid-fqqq73in>API Integration</h3> <p data-astro-cid-fqqq73in>Connecting your apps with external services via RESTful and GraphQL APIs.</p> </div> <div class="service-card" data-astro-cid-fqqq73in> <div class="service-icon" data-astro-cid-fqqq73in>🛠️</div> <h3 data-astro-cid-fqqq73in>Software Maintenance & Support</h3> <p data-astro-cid-fqqq73in>Providing ongoing maintenance, bug fixes, and feature updates to ensure long-term software reliability.</p> </div> <div class="service-card" data-astro-cid-fqqq73in> <div class="service-icon" data-astro-cid-fqqq73in>☁️</div> <h3 data-astro-cid-fqqq73in>Cloud Deployment</h3> <p data-astro-cid-fqqq73in>Deploying scalable, reliable applications on AWS, Azure, or Google Cloud platforms.</p> </div> </div> </div> </section>  <script type="module">
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script> <section id="contact" class="section contact-section" data-astro-cid-aktkelsr> <div class="container" data-astro-cid-aktkelsr> <h2 class="contact-title text-3xl md:text-4xl font-bold mb-8 text-center text-teal-400" data-astro-cid-aktkelsr>Contact Me</h2> <div id="form-response" data-astro-cid-aktkelsr> <!-- Removed action="https://formspree.io/uriel621@live.com" --> <form id="contact-form" class="contact-form" novalidate method="post" hx-post="https://everscode-api.up.railway.app/portfoliocontactform" hx-target="#form-response" hx-swap="outerHTML" data-astro-cid-aktkelsr> <div class="input-row" data-astro-cid-aktkelsr> <div class="input-group" data-astro-cid-aktkelsr> <label for="first-name" data-astro-cid-aktkelsr>First Name</label> <input type="text" id="first-name" name="firstName" placeholder="Your first name" required data-astro-cid-aktkelsr> </div> <div class="input-group" data-astro-cid-aktkelsr> <label for="last-name" data-astro-cid-aktkelsr>Last Name</label> <input type="text" id="last-name" name="lastName" placeholder="Your last name" required data-astro-cid-aktkelsr> </div> </div> <div class="input-row" data-astro-cid-aktkelsr> <div class="input-group" data-astro-cid-aktkelsr> <label for="phone" data-astro-cid-aktkelsr>Phone</label> <input type="tel" id="phone" name="phone" placeholder="Your phone number" pattern="^+?[0-9s-]{7,15}$" data-astro-cid-aktkelsr> </div> <div class="input-group" data-astro-cid-aktkelsr> <label for="email" data-astro-cid-aktkelsr>Email</label> <input type="email" id="email" name="email" placeholder="Your email address" required data-astro-cid-aktkelsr> </div> </div> <div class="input-group full-width" data-astro-cid-aktkelsr> <label for="message" data-astro-cid-aktkelsr>Message</label> <textarea id="message" name="message" rows="5" placeholder="Write your message here..." required data-astro-cid-aktkelsr></textarea> </div> <input type="text" name="website" id="website" style="display:none" autocomplete="off" data-astro-cid-aktkelsr> <button type="submit" class="btn-submit" data-astro-cid-aktkelsr>Send Message</button> </form> </div> </div> </section>  <script type="module">const e=document.getElementById("contact-form");e&&e.addEventListener("submit",function(t){document.getElementById("website")?.value&&(t.preventDefault(),console.warn("Bot detected - submission blocked."))});</script> <div data-astro-cid-vmtjio7d>  <section id="location-map" class="map-section-wrapper" data-astro-cid-vmtjio7d> <div id="gmap" class="map-container" data-astro-cid-vmtjio7d>  </div> </section> <footer class="site-footer" data-astro-cid-vmtjio7d> <div class="footer-container" data-astro-cid-vmtjio7d> <div class="contact-info" data-astro-cid-vmtjio7d> <a href="mailto:evergarcia621@outlook.com" class="contact-link" data-astro-cid-vmtjio7d>evergarcia621@outlook.com</a> <span class="separator" data-astro-cid-vmtjio7d>|</span> <a href="tel:15054001198" class="contact-link" data-astro-cid-vmtjio7d>+1 (505) 400-1198</a> </div> <div class="copyright" data-astro-cid-vmtjio7d>
+&copy; 2017-2026 Ever Uriel Garcia. All rights reserved.
+</div> </div> </footer> </div> <script>(function(){const apiKey = "AIzaSyDhIQ4d9JV5e_JQOqEsBRTzKjdg3sUhpjo";
+const mapStyles = [{"elementType":"geometry","stylers":[{"color":"#212121"}]},{"elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"elementType":"labels.text.fill","stylers":[{"color":"#757575"}]},{"elementType":"labels.text.stroke","stylers":[{"color":"#212121"}]},{"featureType":"administrative","elementType":"geometry","stylers":[{"color":"#757575"}]},{"featureType":"administrative.country","elementType":"labels.text.fill","stylers":[{"color":"#9e9e9e"}]},{"featureType":"administrative.land_parcel","stylers":[{"visibility":"off"}]},{"featureType":"administrative.locality","elementType":"labels.text.fill","stylers":[{"color":"#bdbdbd"}]},{"featureType":"poi","elementType":"labels.text.fill","stylers":[{"color":"#757575"}]},{"featureType":"poi.park","elementType":"geometry","stylers":[{"color":"#181818"}]},{"featureType":"poi.park","elementType":"labels.text.fill","stylers":[{"color":"#616161"}]},{"featureType":"poi.park","elementType":"labels.text.stroke","stylers":[{"color":"#1b1b1b"}]},{"featureType":"road","elementType":"geometry.fill","stylers":[{"color":"#2c2c2c"}]},{"featureType":"road","elementType":"labels.text.fill","stylers":[{"color":"#8a8a8a"}]},{"featureType":"road.arterial","elementType":"geometry","stylers":[{"color":"#373737"}]},{"featureType":"road.highway","elementType":"geometry","stylers":[{"color":"#3c3c3c"}]},{"featureType":"road.highway.controlled_access","elementType":"geometry","stylers":[{"color":"#4e4e4e"}]},{"featureType":"road.local","elementType":"labels.text.fill","stylers":[{"color":"#616161"}]},{"featureType":"transit","elementType":"labels.text.fill","stylers":[{"color":"#757575"}]},{"featureType":"water","elementType":"geometry","stylers":[{"color":"#000000"}]},{"featureType":"water","elementType":"labels.text.fill","stylers":[{"color":"#3d3d3d"}]}];
+const mapCenter = {"lat":34.02641,"lng":-118.40852};
+const mapZoom = 11;
+
+  const mapElement = document.getElementById('gmap');
+  const sectionElementForMap = document.getElementById('location-map');
+
+  function initMap() {
+    if (!mapElement || typeof google === 'undefined' || typeof google.maps === 'undefined') {
+      console.error("Map element or Google Maps API not ready for initMap.");
+      if(mapElement) mapElement.innerHTML = '<p class="map-error-text">Could not initialize Google Maps.</p>';
+      return;
+    }
+    const map = new google.maps.Map(mapElement, {
+      center: mapCenter,
+      zoom: mapZoom,
+      styles: mapStyles,
+      disableDefaultUI: true,
+      zoomControl: true,
+    });
+    new google.maps.Marker({
+      position: mapCenter,
+      map: map,
+    });
+  }
+
+  function loadGoogleMapsScript() {
+    if (window.google && window.google.maps) {
+      initMap();
+      return;
+    }
+    window.initMapGlobalCallback = initMap;
+    const script = document.createElement('script');
+    // Use the apiKey passed via define:vars
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&callback=initMapGlobalCallback&loading=async`;
+    script.async = true;
+    script.defer = true;
+    script.onerror = () => {
+      console.error("Google Maps script failed to load.");
+      if(mapElement) mapElement.innerHTML = '<p class="map-error-text">Google Maps script failed to load. Check API key and network.</p>';
+    };
+    document.head.appendChild(script);
+  }
+
+  if (apiKey && mapElement && sectionElementForMap) {
+    const observer = new IntersectionObserver((entries, obs) => {
+      if (entries.some(entry => entry.isIntersecting)) {
+        loadGoogleMapsScript();
+        obs.disconnect();
+      }
+    }, { threshold: 0.1 });
+    observer.observe(sectionElementForMap);
+  } else if (!apiKey && mapElement) {
+      console.warn("Google Maps API key is missing. Map will not load.");
+      mapElement.innerHTML = '<p class="map-error-text">Map requires an API Key. Please check configuration.</p>';
+  } else if (!mapElement && apiKey) {
+      console.error("Map container element #gmap not found for API key:", apiKey ? '******' : 'undefined');
+  } else if (!sectionElementForMap && apiKey) {
+      console.error("Map section element #location-map not found for Intersection Observer.");
+  }
+})();</script>  <div id="redirectModal" class="modal-overlay" data-astro-cid-j7pv25f6> <div class="modal-content" data-astro-cid-j7pv25f6> <h3 data-astro-cid-j7pv25f6>Leaving?</h3> <p data-astro-cid-j7pv25f6>You're about to navigate to a new page. Do you want to proceed?</p> <div class="modal-actions" data-astro-cid-j7pv25f6> <button id="modalStayButton" class="btn btn-modal-secondary" data-astro-cid-j7pv25f6>Stay Here</button> <button id="modalProceedButton" class="btn btn-modal-primary" data-astro-cid-j7pv25f6>Let's Go</button> </div> </div> </div> <script type="module" src="/_astro/index.astro_astro_type_script_index_0_lang.dO4kUHBD.js"></script>  </body></html> 
