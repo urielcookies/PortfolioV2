@@ -1,9 +1,11 @@
----
-const IS_DEV = import.meta.env.DEV;
-
-const POST_URL = IS_DEV
+---                                                                                                                              
+const IS_DEV = import.meta.env.DEV;                                                                                              
+                                                                                                                                  
+const POST_URL = IS_DEV                                                                                                          
   ? 'http://127.0.0.1:5001/portfoliocontactform'
   : 'https://everscode-api.up.railway.app/portfoliocontactform';
+
+const TURNSTILE_SITE_KEY = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '';
 ---
 <section id="contact" class="section contact-section">
   <div class="container">
@@ -46,11 +48,16 @@ const POST_URL = IS_DEV
         </div>
 
         <input type="text" name="website" id="website" style="display:none" autocomplete="off" />
+
+        <div class="cf-turnstile" data-sitekey={TURNSTILE_SITE_KEY} data-theme="dark"></div>
+
         <button type="submit" class="btn-submit">Send Message</button>
       </form>
     </div>
   </div>
 </section>
+
+<script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 
 <style>
   #contact {
@@ -129,7 +136,7 @@ const POST_URL = IS_DEV
   textarea {
     border: 1.5px solid #555;
     padding: 0.5rem 1rem;
-    color: #222; 
+    color: #222;
   }
 
   input::placeholder,
@@ -147,6 +154,10 @@ const POST_URL = IS_DEV
   textarea {
     resize: vertical;
     min-height: 120px;
+  }
+
+  .cf-turnstile {
+    align-self: center;
   }
 
   .btn-submit {
@@ -177,6 +188,13 @@ const POST_URL = IS_DEV
       if (honeypot) {
         e.preventDefault();
         console.warn('Bot detected - submission blocked.');
+        return;
+      }
+
+      const turnstileResponse = form.querySelector<HTMLInputElement>('[name="cf-turnstile-response"]');
+      if (!turnstileResponse || !turnstileResponse.value) {
+        e.preventDefault();
+        alert('Please complete the CAPTCHA verification.');
       }
     });
   }
