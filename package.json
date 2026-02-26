@@ -11,6 +11,8 @@
   "dependencies": {
     "@astrojs/react": "^4.3.0",
     "@nanostores/persistent": "^1.0.0",
+    "@tsparticles/engine": "^3.9.1",
+    "@tsparticles/slim": "^3.9.1",
     "@types/react": "^19.1.5",
     "@types/react-dom": "^19.1.5",
     "astro": "^5.7.14",

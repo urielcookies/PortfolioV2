@@ -1,4 +1,5 @@
-<section id="intro" class="section intro">
+<section id="intro" class="intro">
+  <div id="tsparticles-intro" class="particles-bg"></div>
   <div class="intro-content">
     <h1>
       Hi, I'm <span class="highlight">Ever Uriel Garcia</span><br />
@@ -6,8 +7,8 @@
     </h1>
     <p>
       I build fullstack applications from the ground up.
-      When I’m not coding at work,
-      I’m working on personal projects, contributing to open source
+      When I'm not coding at work,
+      I'm working on personal projects, contributing to open source
       (<a href="http://www.hackforla.org/" id="hack4la" target="_blank" rel="noopener noreferrer">Hack for LA</a>),
       or watching the latest Fireship videos on YouTube—sometimes all at once. I love what I do.
     </p>
@@ -16,21 +17,11 @@
 </section>
 
 <style>
-  :root {
-    --color-bg: #0f172a;
-    --color-text: #e0e7ff;
-    --color-highlight: #14b8a6;
-  }
-
-  .section {
-    padding: 6rem 2rem;
-  }
-
   .intro {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
-    /* min-height: 100vh; */
     margin-top: 10vh;
     height: 90vh;
     scroll-margin-top: 10vh;
@@ -38,9 +29,20 @@
     color: var(--color-text);
     text-align: center;
     padding: 6rem 1.5rem;
+    overflow: hidden;
+  }
+
+  .particles-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
   }
 
   .intro-content {
+    position: relative;
+    z-index: 1;
     max-width: 800px;
     margin: 0 auto;
     opacity: 0;
@@ -60,7 +62,7 @@
     font-weight: 700;
   }
 
-  .intro .highlight {
+  .highlight {
     color: var(--color-highlight);
   }
 
@@ -71,7 +73,7 @@
     color: var(--color-text);
   }
 
-  .intro .btn {
+  .btn {
     display: inline-block;
     padding: 0.75rem 1.5rem;
     background-color: var(--color-highlight);
@@ -82,15 +84,14 @@
     transition: background-color 0.3s ease;
   }
 
-  .intro .btn:hover {
+  .btn:hover {
     background-color: #3aa98e;
   }
 
   #hack4la {
-    color: #fa114f
+    color: #fa114f;
   }
 
-  /* Responsive */
   @media (max-width: 768px) {
     .intro h1 {
       font-size: 2rem;
@@ -102,23 +103,59 @@
   }
 </style>
 
-<script type="module">
-  document.addEventListener('DOMContentLoaded', () => {
-    const introContent = document.querySelector('.intro-content');
-    if (!introContent) return;
+<script>
+  import { tsParticles } from "@tsparticles/engine";
+  import { loadSlim } from "@tsparticles/slim";
 
+  await loadSlim(tsParticles);
+
+  await tsParticles.load({
+    id: "tsparticles-intro",
+    options: {
+      fullScreen: { enable: false },
+      fpsLimit: 120,
+      particles: {
+        color: { value: "#14b8a6" },
+        move: {
+          enable: true,
+          direction: "none",
+          outModes: { default: "out" },
+          speed: { min: 0.1, max: 1 },
+        },
+        number: {
+          density: { enable: true, width: 400, height: 400 },
+          value: 100,
+        },
+        opacity: {
+          value: { min: 0.1, max: 1 },
+          animation: {
+            enable: true,
+            speed: 1,
+            sync: false,
+          },
+        },
+        shape: { type: "circle" },
+        size: {
+          value: { min: 0.6, max: 1.4 },
+        },
+      },
+      detectRetina: true,
+    },
+  });
+
+  const introContent = document.querySelector('.intro-content');
+  if (introContent) {
     const observer = new IntersectionObserver(
-      (entries, observer) => {
+      (entries, obs) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
             introContent.classList.add('visible');
-            observer.unobserve(introContent);
+            obs.unobserve(introContent);
           }
         });
       },
       { threshold: 0.1 }
     );
-
     observer.observe(introContent);
-  });
+  }
 </script>
