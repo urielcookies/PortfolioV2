@@ -1,4 +1,6 @@
 ---
+import { SocialIcons } from "../ui/social-icons";
+
 const apiKey = "AIzaSyDhIQ4d9JV5e_JQOqEsBRTzKjdg3sUhpjo";
 
 
@@ -31,7 +33,6 @@ const mapStyles = [
 ];
 
 // --- FOOTER VARIABLES ---
-const currentYear = new Date().getFullYear();
 const email = "evergarcia621@outlook.com";
 const phone = "+1 (505) 400-1198";
 ---
@@ -50,14 +51,20 @@ const phone = "+1 (505) 400-1198";
         <span class="separator">|</span>
         <a href={`tel:${phone.replace(/\D/g, '')}`} class="contact-link">{phone}</a>
       </div>
+      <div class="footer-socials">
+        <SocialIcons client:visible only={["GitHub", "LinkedIn", "Instagram"]} />
+      </div>
       <div class="copyright">
-        &copy; 2017-{currentYear} Ever Uriel Garcia. All rights reserved.
+        &copy; 2017-<span id="footer-year"></span> Ever Uriel Garcia. All rights reserved.
       </div>
     </div>
   </footer>
 </div>
 
 <script define:vars={{ apiKey, mapStyles, mapCenter, mapZoom }}>
+  const yearEl = document.getElementById('footer-year');
+  if (yearEl) yearEl.textContent = new Date().getFullYear();
+
   const mapElement = document.getElementById('gmap');
   const sectionElementForMap = document.getElementById('location-map');
 
@@ -151,7 +158,7 @@ const phone = "+1 (505) 400-1198";
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1rem;
+    gap: 1.25rem;
   }
   .contact-info {
     display: flex;
@@ -163,17 +170,22 @@ const phone = "+1 (505) 400-1198";
   .contact-link {
     color: var(--color-text-secondary, #a0aec0);
     text-decoration: none;
+    font-size: 0.9rem;
     transition: color 0.3s ease;
   }
   .contact-link:hover {
     color: var(--color-highlight, #38b2ac);
   }
   .separator {
-    margin: 0 0.25rem;
+    opacity: 0.4;
+  }
+  .footer-socials {
+    display: flex;
+    justify-content: center;
   }
   .copyright {
-    font-size: 0.875rem;
-    margin-top: 0.5rem;
+    font-size: 0.8rem;
+    opacity: 0.5;
   }
 
   @media (min-width: 768px) {
@@ -181,14 +193,17 @@ const phone = "+1 (505) 400-1198";
       flex-direction: row;
       justify-content: space-between;
       align-items: center;
-      text-align: left;
       gap: 1.5rem;
     }
     .contact-info {
       justify-content: flex-start;
+      flex: 1;
+    }
+    .footer-socials {
+      flex: 0;
     }
     .copyright {
-      margin-top: 0;
+      flex: 1;
       text-align: right;
     }
   }

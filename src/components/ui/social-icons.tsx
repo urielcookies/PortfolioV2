@@ -55,12 +55,17 @@ const socials = [
   },
 ]
 
-export function SocialIcons() {
+interface SocialIconsProps {
+  only?: string[]
+}
+
+export function SocialIcons({ only }: SocialIconsProps) {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
+  const filtered = only ? socials.filter(s => only.includes(s.name)) : socials
 
   return (
     <div className="flex items-center gap-5">
-      {socials.map((social, index) => (
+      {filtered.map((social, index) => (
         <a
           key={social.name}
           href={social.href}
