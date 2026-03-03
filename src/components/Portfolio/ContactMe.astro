@@ -1,13 +1,19 @@
----                                                                                                                              
-const IS_DEV = import.meta.env.DEV;                                                                                              
+---
+import { SocialIcons } from "../ui/social-icons";
 
-const POST_URL = IS_DEV                                                                                                          
+const IS_DEV = import.meta.env.DEV;
+
+const POST_URL = IS_DEV
   ? 'http://127.0.0.1:5001/portfoliocontactform'
   : 'https://everscode-api.up.railway.app/portfoliocontactform';
 ---
 <section id="contact" class="section contact-section">
   <div class="container">
     <h2 class="contact-title text-3xl md:text-4xl font-bold mb-8 text-center text-teal-400">Contact Me</h2>
+    <div class="social-row">
+      <SocialIcons client:load />
+    </div>
+
     <div id="form-response">
       <!-- Removed action="https://formspree.io/uriel621@live.com" -->
       <form
@@ -20,29 +26,29 @@ const POST_URL = IS_DEV
         hx-swap="outerHTML">
         <div class="input-row">
           <div class="input-group">
+            <input type="text" id="first-name" name="firstName" placeholder=" " required />
             <label for="first-name">First Name</label>
-            <input type="text" id="first-name" name="firstName" placeholder="Your first name" required />
           </div>
           <div class="input-group">
+            <input type="text" id="last-name" name="lastName" placeholder=" " required />
             <label for="last-name">Last Name</label>
-            <input type="text" id="last-name" name="lastName" placeholder="Your last name" required />
           </div>
         </div>
 
         <div class="input-row">
           <div class="input-group">
+            <input type="tel" id="phone" name="phone" placeholder=" " pattern="^\+?[0-9\s\-]{7,15}$" />
             <label for="phone">Phone</label>
-            <input type="tel" id="phone" name="phone" placeholder="Your phone number" pattern="^\+?[0-9\s\-]{7,15}$" />
           </div>
           <div class="input-group">
+            <input type="email" id="email" name="email" placeholder=" " required />
             <label for="email">Email</label>
-            <input type="email" id="email" name="email" placeholder="Your email address" required />
           </div>
         </div>
 
         <div class="input-group full-width">
+          <textarea id="message" name="message" rows="5" placeholder=" " required></textarea>
           <label for="message">Message</label>
-          <textarea id="message" name="message" rows="5" placeholder="Write your message here..." required></textarea>
         </div>
 
         <input type="text" name="website" id="website" style="display:none" autocomplete="off" />
@@ -110,44 +116,70 @@ const POST_URL = IS_DEV
 
   .input-group {
     flex: 1;
-    display: flex;
-    flex-direction: column;
+    position: relative;
   }
 
   .input-group.full-width {
     flex: 1 1 100%;
   }
 
-  label {
-    margin-bottom: 0.5rem;
-    font-weight: 600;
-    font-size: 1rem;
-  }
-
   input[type="text"],
   input[type="tel"],
   input[type="email"],
   textarea {
-    border: 1.5px solid #555;
-    padding: 0.5rem 1rem;
-    color: #222;
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1.5px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0.625rem;
+    padding: 1.5rem 1rem 0.5rem;
+    color: var(--color-text);
+    font-size: 0.95rem;
+    width: 100%;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
   }
 
-  input::placeholder,
-  textarea::placeholder {
-    color: #888;                      /* Medium-light placeholder */
+  textarea {
+    resize: vertical;
+    min-height: 120px;
+    padding-top: 1.75rem;
+  }
+
+  /* Floating label — default state (inside the field) */
+  .input-group label {
+    position: absolute;
+    left: 1rem;
+    top: 1rem;
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.35);
+    pointer-events: none;
+    transition: all 0.18s ease;
+    margin: 0;
+  }
+
+  /* Textarea label starts a bit higher */
+  .input-group textarea ~ label {
+    top: 1.1rem;
+  }
+
+  /* Floated state — on focus or when filled */
+  .input-group input:focus ~ label,
+  .input-group input:not(:placeholder-shown) ~ label,
+  .input-group textarea:focus ~ label,
+  .input-group textarea:not(:placeholder-shown) ~ label {
+    top: 0.35rem;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-highlight);
   }
 
   input:focus,
   textarea:focus {
     outline: none;
     border-color: var(--color-highlight);
-    box-shadow: 0 0 8px var(--color-highlight);
-  }
-
-  textarea {
-    resize: vertical;
-    min-height: 120px;
+    background-color: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 0 0 3px rgba(79, 191, 168, 0.15);
   }
 
   .btn-submit {
@@ -167,6 +199,12 @@ const POST_URL = IS_DEV
   .btn-submit:hover {
     background-color: var(--color-highlight-hover);
     box-shadow: 0 8px 16px rgba(62, 167, 144, 0.7);
+  }
+
+  .social-row {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
   }
 </style>
 
