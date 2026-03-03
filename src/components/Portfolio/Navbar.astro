@@ -95,15 +95,17 @@
     }
 
     if (currentSectionId) {
-      setActiveLink(`#${currentSectionId}`);
-      const titleSection = currentSectionId.charAt(0).toUpperCase() + currentSectionId.slice(1).toLowerCase();
-      document.title = `${titleSection} — EversCode`;
+        setActiveLink(`#${currentSectionId}`);
 
-      if (currentSectionId !== 'intro' && window.location.hash !== `#${currentSectionId}`) {
-        history.replaceState(null, document.title, `#${currentSectionId}`);
-      } else if (currentSectionId === 'intro' && window.location.hash) {
-        history.replaceState(null, document.title, window.location.pathname + window.location.search);
-      }
+        if (currentSectionId === 'intro') {
+          document.title = 'EversCode';
+        } else {
+          const titleSection =
+            currentSectionId.charAt(0).toUpperCase() +
+            currentSectionId.slice(1).toLowerCase();
+
+          document.title = `${titleSection} — EversCode`;
+        }
     } else if (scrollY === 0) { 
         setActiveLink('#intro'); 
         document.title = 'EversCode';
