@@ -27,6 +27,7 @@
   let modalStayButton = null;
   let modalProceedButton = null;
   let targetRedirectUrl = '';
+  let currentSection = '';
 
   function setActiveLink(currentHash) {
     if (!links) return;
@@ -106,10 +107,22 @@
 
           document.title = `${titleSection} — EversCode`;
         }
-    } else if (scrollY === 0) { 
-        setActiveLink('#intro'); 
+
+        if (currentSectionId !== currentSection) {
+          currentSection = currentSectionId;
+          if (currentSectionId === 'intro') {
+            history.replaceState(null, document.title, window.location.pathname + window.location.search);
+          } else {
+            history.replaceState(null, document.title, `#${currentSectionId}`);
+          }
+        }
+    } else if (scrollY === 0) {
+        setActiveLink('#intro');
         document.title = 'EversCode';
-        history.replaceState(null, document.title, window.location.pathname + window.location.search);
+        if (currentSection !== 'intro') {
+          currentSection = 'intro';
+          history.replaceState(null, document.title, window.location.pathname + window.location.search);
+        }
     }
   }
 
