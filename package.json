@@ -17,6 +17,7 @@
     "@types/react-dom": "^19.1.5",
     "astro": "^5.7.14",
     "embla-carousel-react": "^8.6.0",
+    "framer-motion": "^12.34.4",
     "nanostores": "^1.0.1",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",

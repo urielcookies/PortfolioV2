@@ -1,9 +1,26 @@
+---
+import { Typewriter } from '../ui/typewriter';
+---
 <section id="intro" class="intro">
   <div id="tsparticles-intro" class="particles-bg"></div>
   <div class="intro-content">
     <h1>
       Hi, I'm <span class="highlight">Ever Uriel Garcia</span><br />
-      A FullStack Web Developer
+      <Typewriter
+        client:load
+        text={[
+          "A FullStack Web Developer",
+          "A Mobile App Developer",
+          "A Product-Focused Engineer",
+          "A Problem Solver",
+        ]}
+        speed={70}
+        className="text-white"
+        waitTime={1500}
+        deleteSpeed={40}
+        cursorChar="|"
+        cursorClassName="ml-1 text-teal-500"
+      />
     </h1>
     <p>
       I build fullstack applications from the ground up.
@@ -64,6 +81,7 @@
 
   .highlight {
     color: var(--color-highlight);
+    white-space: nowrap;
   }
 
   .intro p {
